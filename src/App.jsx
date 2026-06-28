@@ -704,9 +704,7 @@ function AuthScreen({ onLogin, users }) {
           <button className="btn-primary" style={{fontSize:17,padding:"15px",borderRadius:10,letterSpacing:".01em"}} onClick={login}>
             Sign in to AI Literacy 101
           </button>
-          <p style={{fontSize:13,color:"#9CA3AF",marginTop:16,textAlign:"center"}}>
-            First time? Log in as admin (admin@bilkent.edu.tr / admin123) and create accounts from User Management.
-          </p>
+
         </div>
       </div>
     </div>
