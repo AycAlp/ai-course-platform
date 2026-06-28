@@ -671,12 +671,9 @@ function AuthScreen({ onLogin, users }) {
           </div>
         </div>
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",width:"100%"}}>
-          <h1 style={{fontSize:56,fontWeight:900,color:"#fff",lineHeight:1.05,marginBottom:24,letterSpacing:"-.02em",textAlign:"center"}}>
+          <h1 style={{fontSize:56,fontWeight:900,color:"#fff",lineHeight:1.05,marginBottom:0,letterSpacing:"-.02em",textAlign:"center"}}>
             AI Literacy<br/><span style={{color:"#faf5f5ea"}}>101</span>
           </h1>
-          <p style={{fontSize:18,color:"rgba(255,255,255,.75)",lineHeight:1.7,maxWidth:340,textAlign:"center"}}>
-            A 14-week credit-bearing course on artificial intelligence for students across all faculties. No technical background required.
-          </p>
         </div>
       </div>
 
@@ -870,8 +867,8 @@ function ModuleList({ modules, setView, setMod }) {
     <div className="main">
       <div className="page-header">
         <div className="page-eyebrow">Course Content</div>
-        <div className="page-title">AI Literarcy 101</div>
-        <div className="page-desc">X modules</div>
+        <div className="page-title">AI for University Students</div>
+        <div className="page-desc">14 modules · 4 sections · 3 credits · No technical background required</div>
       </div>
       <div className="page-body">
         {phases.map(ph=>{
