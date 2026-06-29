@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_URL  = "https://nfqxwbcfvylxorjdqibi.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5mcXh3YmNmdnlseG9yamRxaWJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3MDE1NDcsImV4cCI6MjA5ODI3NzU0N30.TYPpaTo_M44RSl0II8_tcEH6cGduI9g6rMm68Lv917I";
+const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
 
 const T = {
   navy:    "#003366",   // Bilkent navy
@@ -2946,72 +2951,178 @@ export default function App() {
   const [view,        setView]        = useState("dashboard");
   const [mod,         setMod]         = useState(null);
   const [previewMode, setPreviewMode] = useState(false);
+  const [loading,     setLoading]     = useState(true);
 
-  // Task submissions — persisted in localStorage. Students write, instructors grade.
-  const [submissions, setSubmissions] = useState(() => {
-    try { const s = localStorage.getItem("ai_course_submissions"); if(s) return JSON.parse(s); } catch(e) {}
-    return [];
-  });
-  const addSubmission = (sub) => {
-    setSubmissions(prev => {
-      const next = [...prev, sub];
-      try { localStorage.setItem("ai_course_submissions", JSON.stringify(next)); } catch(e) {}
-      return next;
-    });
-  };
-  const gradeSubmission = (id, grade, feedback) => {
-    setSubmissions(prev => {
-      const next = prev.map(s => s.id===id ? {...s, grade, feedback, status:"graded"} : s);
-      try { localStorage.setItem("ai_course_submissions", JSON.stringify(next)); } catch(e) {}
-      return next;
-    });
-  };
+  // ── SHARED STATE — all backed by Supabase ─────────────────────────────────
+  const [users,       setUsers]       = useState(INITIAL_USERS);
+  const [modules,     setModules]     = useState(INITIAL_MODULES);
+  const [submissions, setSubmissions] = useState([]);
+  const realtimeRef = useRef(null);
 
-  // Users — persisted in localStorage. Admin is the only seed account.
-  const [users, setUsers] = useState(() => {
-    try {
-      const saved = localStorage.getItem("ai_course_users");
-      if (saved) return JSON.parse(saved);
-    } catch(e) {}
-    return INITIAL_USERS;
-  });
+  // ── LOAD ALL DATA ON MOUNT ────────────────────────────────────────────────
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true);
+      try {
+        // Load users
+        const { data: dbUsers } = await sb.from("users").select("*").order("id");
+        if (dbUsers && dbUsers.length > 0) setUsers(dbUsers);
 
-  const saveUsers = (next) => {
-    try { localStorage.setItem("ai_course_users", JSON.stringify(next)); } catch(e) {}
+        // Load modules — if none in DB yet, seed from INITIAL_MODULES
+        const { data: dbMods } = await sb.from("modules").select("*").order("week");
+        if (dbMods && dbMods.length > 0) {
+          setModules(dbMods.map(m => ({
+            ...m,
+            outcomes:  Array.isArray(m.outcomes)  ? m.outcomes  : [],
+            skills:    Array.isArray(m.skills)     ? m.skills    : [],
+            sections:  Array.isArray(m.sections)   ? m.sections  : [],
+            materials: Array.isArray(m.materials)  ? m.materials : [],
+          })));
+        } else {
+          // First run — seed the database with INITIAL_MODULES
+          const toInsert = INITIAL_MODULES.map(m => ({
+            week: m.week, phase: m.phase, title: m.title,
+            subtitle: m.subtitle, duration: m.duration,
+            thumbnail: m.thumbnail, color: m.color, status: m.status,
+            outcomes: m.outcomes||[], skills: m.skills||[],
+            sections: m.sections||[], materials: m.materials||[],
+            module_body: m.moduleBody||"",
+            reflection_prompt: m.reflectionPrompt||"",
+            overview_text: m.overviewText||"",
+          }));
+          const { data: seeded } = await sb.from("modules").insert(toInsert).select();
+          if (seeded) setModules(seeded);
+        }
+
+        // Load submissions
+        const { data: dbSubs } = await sb.from("submissions").select("*").order("submitted_at", {ascending:false});
+        if (dbSubs) setSubmissions(dbSubs.map(s => ({
+          ...s,
+          studentId:       s.student_id,
+          studentName:     s.student_name,
+          studentInitials: s.student_initials,
+          moduleId:        s.module_id,
+          moduleName:      s.module_name,
+          moduleWeek:      s.module_week,
+          matIndex:        s.mat_index,
+          matTitle:        s.mat_title,
+          taskType:        s.task_type,
+          taskTitle:       s.task_title,
+          maxScore:        s.max_score,
+          wordCount:       s.word_count,
+          submittedAt:     s.submitted_at,
+          gradedAt:        s.graded_at,
+          rubric:          Array.isArray(s.rubric) ? s.rubric : [],
+        })));
+      } catch(e) { console.error("Supabase load error:", e); }
+      setLoading(false);
+    };
+    load();
+
+    // ── REAL-TIME subscription — submissions appear instantly on instructor screen
+    const channel = sb.channel("realtime-submissions")
+      .on("postgres_changes", { event:"INSERT", schema:"public", table:"submissions" }, payload => {
+        const s = payload.new;
+        setSubmissions(prev => [{
+          ...s, id: s.id,
+          studentId: s.student_id, studentName: s.student_name,
+          studentInitials: s.student_initials, moduleId: s.module_id,
+          moduleName: s.module_name, moduleWeek: s.module_week,
+          matIndex: s.mat_index, matTitle: s.mat_title,
+          taskType: s.task_type, taskTitle: s.task_title,
+          maxScore: s.max_score, wordCount: s.word_count,
+          submittedAt: s.submitted_at, rubric: s.rubric||[],
+        }, ...prev]);
+      })
+      .on("postgres_changes", { event:"UPDATE", schema:"public", table:"submissions" }, payload => {
+        const s = payload.new;
+        setSubmissions(prev => prev.map(x => x.id===s.id ? {...x,...s,grade:s.grade,feedback:s.feedback,status:s.status} : x));
+      })
+      .subscribe();
+    realtimeRef.current = channel;
+    return () => { sb.removeChannel(channel); };
+  }, []);
+
+  // ── CRUD FUNCTIONS ────────────────────────────────────────────────────────
+  const saveUsers = async (next) => {
     setUsers(next);
+    // Upsert all users — Supabase handles insert vs update by id
+    const toUpsert = next.filter(u => !u._deleted);
+    if (toUpsert.length > 0) {
+      await sb.from("users").upsert(toUpsert.map(u => ({
+        id: typeof u.id === "number" && u.id < 1000000 ? u.id : undefined,
+        name: u.name, email: u.email, password: u.password||"changeme",
+        role: u.role, cohort: u.cohort||"2026-Fall", progress: u.progress||0,
+      })));
+    }
   };
 
-  // Modules — persisted in localStorage.
-  const [modules, setModules] = useState(() => {
-    try {
-      const saved = localStorage.getItem("ai_course_modules");
-      if (saved) return JSON.parse(saved);
-    } catch(e) {}
-    return INITIAL_MODULES;
-  });
-
-  const updateModule = (updatedMod) => {
-    setModules(prev => {
-      const next = prev.map(m => m.id === updatedMod.id ? updatedMod : m);
-      try { localStorage.setItem("ai_course_modules", JSON.stringify(next)); } catch(e) {}
-      return next;
-    });
+  const updateModule = async (updatedMod) => {
+    setModules(prev => prev.map(m => m.id === updatedMod.id ? updatedMod : m));
     if (mod && mod.id === updatedMod.id) setMod(updatedMod);
+    await sb.from("modules").update({
+      title: updatedMod.title, subtitle: updatedMod.subtitle,
+      duration: updatedMod.duration, status: updatedMod.status,
+      outcomes: updatedMod.outcomes||[], skills: updatedMod.skills||[],
+      sections: updatedMod.sections||[], materials: updatedMod.materials||[],
+      module_body: updatedMod.moduleBody||updatedMod.module_body||"",
+      reflection_prompt: updatedMod.reflectionPrompt||updatedMod.reflection_prompt||"",
+      overview_text: updatedMod.overviewText||updatedMod.overview_text||"",
+      updated_at: new Date().toISOString(),
+    }).eq("id", updatedMod.id);
   };
 
-  const deleteModule = (id) => {
-    setModules(prev => {
-      const next = prev.filter(m => m.id !== id).map((m, i) => ({ ...m, week: i + 1 }));
-      try { localStorage.setItem("ai_course_modules", JSON.stringify(next)); } catch(e) {}
-      return next;
-    });
+  const deleteModule = async (id) => {
+    setModules(prev => prev.filter(m => m.id !== id).map((m,i) => ({...m, week:i+1})));
+    await sb.from("modules").delete().eq("id", id);
   };
 
-  const reorderModules = (newOrder) => {
-    const reindexed = newOrder.map((m, i) => ({ ...m, week: i + 1 }));
+  const reorderModules = async (newOrder) => {
+    const reindexed = newOrder.map((m,i) => ({...m, week:i+1}));
     setModules(reindexed);
-    try { localStorage.setItem("ai_course_modules", JSON.stringify(reindexed)); } catch(e) {}
+    // Update week numbers in DB
+    await Promise.all(reindexed.map(m => sb.from("modules").update({week:m.week}).eq("id",m.id)));
   };
+
+  const addSubmission = async (sub) => {
+    const { data } = await sb.from("submissions").insert({
+      student_id:       sub.studentId,
+      student_name:     sub.studentName,
+      student_initials: sub.studentInitials,
+      module_id:        sub.moduleId,
+      module_name:      sub.moduleName,
+      module_week:      sub.moduleWeek,
+      mat_index:        sub.matIndex,
+      mat_title:        sub.matTitle,
+      task_type:        sub.taskType,
+      task_title:       sub.taskTitle,
+      graded:           sub.graded,
+      max_score:        sub.maxScore||100,
+      rubric:           sub.rubric||[],
+      answer:           sub.answer,
+      word_count:       sub.wordCount,
+      status:           "pending",
+    }).select().single();
+    // Real-time subscription will add it to state automatically
+  };
+
+  const gradeSubmission = async (id, grade, feedback) => {
+    setSubmissions(prev => prev.map(s => s.id===id ? {...s, grade, feedback, status:"graded"} : s));
+    await sb.from("submissions").update({
+      grade, feedback, status:"graded",
+      graded_at: new Date().toISOString(),
+    }).eq("id", id);
+  };
+
+  // Loading screen
+  if (loading) return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#003366",flexDirection:"column",gap:16}}>
+      <div style={{fontSize:48,fontWeight:900,color:"#fff"}}>AI Literacy 101</div>
+      <div style={{fontSize:16,color:"rgba(255,255,255,.6)"}}>Loading course data...</div>
+      <div style={{width:48,height:48,border:"4px solid rgba(255,255,255,.2)",borderTopColor:"#CC0000",borderRadius:"50%",animation:"spin 0.8s linear infinite"}}/>
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
 
   if (!user) return <><style>{css}</style><AuthScreen onLogin={u=>{setUser(u);setView("dashboard");}} users={users}/></>;
 
