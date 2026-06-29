@@ -2666,7 +2666,7 @@ function AdminDashboard() {
   );
 }
 
-function UserManagement({ users, saveUsers }) {
+function UserManagement({ users, saveUsers, addUserToDb, removeUserFromDb }) {
   const [showAdd, setShowAdd] = useState(false);
   const [nName,     setNName]     = useState("");
   const [nEmail,    setNEmail]    = useState("");
@@ -2708,7 +2708,7 @@ function UserManagement({ users, saveUsers }) {
     e.target.value="";
   };
 
-  const addUser = () => {
+  const addUser = async () => {
     if (!nName.trim() || !nEmail.trim() || !nPassword.trim()) {
       setAddError("Name, email, and password are all required.");
       return;
@@ -2717,21 +2717,24 @@ function UserManagement({ users, saveUsers }) {
       setAddError("A user with that email already exists.");
       return;
     }
-    const next = [...users, {
-      id: Date.now(),
-      name: nName.trim(),
-      email: nEmail.trim(),
+    setAddError("");
+    const result = await addUserToDb({
+      name:     nName.trim(),
+      email:    nEmail.trim(),
       password: nPassword.trim(),
-      role: nRole,
-      cohort: nCohort,
-      progress: nRole === "learner" ? 0 : null,
-    }];
-    saveUsers(next);
-    setNName(""); setNEmail(""); setNPassword(""); setNRole("learner"); setAddError(""); setShowAdd(false);
+      role:     nRole,
+      cohort:   nCohort,
+      progress: nRole === "learner" ? 0 : 0,
+    });
+    if (result.error) {
+      setAddError("Could not save: " + result.error);
+      return;
+    }
+    setNName(""); setNEmail(""); setNPassword(""); setNRole("learner"); setShowAdd(false);
   };
 
   const removeUser = (id) => {
-    saveUsers(users.filter(u => u.id !== id));
+    removeUserFromDb(id);
   };
 
   return (
@@ -3045,16 +3048,45 @@ export default function App() {
 
   // ── CRUD FUNCTIONS ────────────────────────────────────────────────────────
   const saveUsers = async (next) => {
+    // This is only called for bulk CSV import now
+    // For individual add/remove use addUserToDb / removeUserFromDb
     setUsers(next);
-    // Upsert all users — Supabase handles insert vs update by id
-    const toUpsert = next.filter(u => !u._deleted);
-    if (toUpsert.length > 0) {
-      await sb.from("users").upsert(toUpsert.map(u => ({
-        id: typeof u.id === "number" && u.id < 1000000 ? u.id : undefined,
-        name: u.name, email: u.email, password: u.password||"changeme",
-        role: u.role, cohort: u.cohort||"2026-Fall", progress: u.progress||0,
-      })));
+    for (const u of next) {
+      if (!u._fromDb) {
+        await sb.from("users").insert({
+          name: u.name, email: u.email,
+          password: u.password||"changeme",
+          role: u.role, cohort: u.cohort||"2026-Fall",
+          progress: u.progress||0,
+        }).then(({data}) => {
+          if (data && data[0]) {
+            setUsers(prev => prev.map(x => x.email===u.email ? {...x, id:data[0].id, _fromDb:true} : x));
+          }
+        });
+      }
     }
+  };
+
+  const addUserToDb = async (userData) => {
+    const { data, error } = await sb.from("users").insert({
+      name:     userData.name,
+      email:    userData.email,
+      password: userData.password || "changeme",
+      role:     userData.role,
+      cohort:   userData.cohort || "2026-Fall",
+      progress: userData.role === "learner" ? 0 : 0,
+    }).select().single();
+    if (error) {
+      console.error("Insert user error:", error);
+      return { error: error.message };
+    }
+    setUsers(prev => [...prev, {...userData, id: data.id, _fromDb: true}]);
+    return { data };
+  };
+
+  const removeUserFromDb = async (id) => {
+    await sb.from("users").delete().eq("id", id);
+    setUsers(prev => prev.filter(u => u.id !== id));
   };
 
   const updateModule = async (updatedMod) => {
@@ -3147,7 +3179,7 @@ export default function App() {
       return <InstructorDashboard user={user} users={users} onPreview={enterPreview}/>;
     }
     if (user.role === "admin") {
-      if (view==="users")     return <UserManagement users={users} saveUsers={saveUsers}/>;
+      if (view==="users")     return <UserManagement users={users} saveUsers={saveUsers} addUserToDb={addUserToDb} removeUserFromDb={removeUserFromDb}/>;
       if (view==="analytics") return <Analytics users={users}/>;
       return <AdminDashboard/>;
     }
