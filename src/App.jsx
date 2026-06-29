@@ -581,34 +581,40 @@ const css = `
   .submit-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:8px; }
 
   /* ── INSTRUCTOR EDITOR ───────────────────────────────────────────────── */
-  .editor-grid { display:grid; grid-template-columns:170px 1fr; gap:10px; width:100%; overflow:hidden; box-sizing:border-box; }
-  .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; }
-  .picker-head { padding:18px 20px; border-bottom:1px solid #F1F5F9; font-size:15px; font-weight:700; color:#1E2A3B; }
-  .picker-list { padding:8px; }
-  .picker-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; transition:all .12s; margin-bottom:2px; }
+  .editor-grid { display:grid; grid-template-columns:190px 1fr; gap:10px; width:100%; box-sizing:border-box; }
+  .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; width:190px; flex-shrink:0; }
+  .picker-head { padding:12px 14px; border-bottom:1px solid #F1F5F9; font-size:14px; font-weight:700; color:#1E2A3B; }
+  .picker-list { padding:6px; }
+  .picker-item { display:flex; align-items:center; gap:6px; padding:7px 8px; border-radius:8px; cursor:pointer; transition:all .12s; margin-bottom:1px; }
   .picker-item:hover { background:#F8FAFC; }
   .picker-item.active { background:#003366; }
-  .picker-week { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#64748B; min-width:28px; }
-  .picker-item.active .picker-week { color:rgba(255,255,255,.6); }
-  .picker-name { font-size:13px; font-weight:600; color:#1E2A3B; }
+  .picker-week { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#64748B; min-width:20px; }
+  .picker-item.active .picker-week { color:rgba(255,255,255,.5); }
+  .picker-name { font-size:11px; font-weight:600; color:#1E2A3B; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .picker-item.active .picker-name { color:#fff; }
-  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; min-width:0; width:100%; }
-  .editor-head { padding:20px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
-  .editor-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
-  .editor-body { padding:12px; overflow-x:hidden; }
-  .editor-label { display:block; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; margin-bottom:8px; }
-  .editor-input { width:100%; padding:10px 12px; border:2px solid #E2E8F0; border-radius:8px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:all .2s; margin-bottom:18px; }
-  .editor-input:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
-  .editor-textarea { width:100%; min-height:80px; padding:10px 12px; border:2px solid #E2E8F0; border-radius:8px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; resize:vertical; line-height:1.65; transition:all .2s; margin-bottom:18px; }
-  .editor-textarea:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
-  .url-add-row { display:flex; gap:8px; margin-bottom:10px; }
-  .url-input { flex:1; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; outline:none; transition:all .2s; }
+  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; min-width:0; flex:1; }
+  .editor-head { padding:12px 16px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  .editor-head-title { font-size:15px; font-weight:700; color:#1E2A3B; }
+  .editor-body { padding:12px; }
+  .editor-label { display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#64748B; margin-bottom:6px; }
+  .editor-input { width:100%; padding:9px 11px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:13px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:border-color .15s; margin-bottom:12px; box-sizing:border-box; }
+  .editor-input:focus { border-color:#003366; }
+  .editor-textarea { width:100%; min-height:72px; padding:9px 11px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:13px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; resize:vertical; line-height:1.6; transition:border-color .15s; margin-bottom:12px; box-sizing:border-box; }
+  .editor-textarea:focus { border-color:#003366; }
+  .url-add-row { display:flex; gap:6px; margin-bottom:8px; }
+  .url-input { flex:1; padding:9px 11px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:13px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; outline:none; min-width:0; }
   .url-input:focus { border-color:#003366; }
-  .add-btn { padding:12px 18px; background:#F8FAFC; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-weight:700; color:#1E2A3B; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap; transition:all .15s; }
+  .add-btn { padding:9px 14px; background:#F8FAFC; border:1.5px solid #E2E8F0; border-radius:8px; font-size:13px; font-weight:700; color:#1E2A3B; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap; flex-shrink:0; }
   .add-btn:hover { border-color:#003366; color:#003366; }
-  .save-btn { padding:12px 24px; background:#CC0000; color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .2s; }
-  .save-btn:hover { background:#A80000; transform:translateY(-1px); }
-  .save-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:14px; }
+  .save-btn { padding:9px 20px; background:#CC0000; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; }
+  .save-btn:hover { background:#A80000; }
+  .save-ok { background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:10px 14px; font-size:13px; color:#166534; font-weight:600; margin-top:10px; }
+  /* Material accordion items */
+  .mat-row { display:flex; align-items:center; gap:8px; padding:10px 12px; cursor:pointer; background:#fff; transition:background .12s; }
+  .mat-row:hover { background:#F8FAFC; }
+  .mat-expanded { border-top:1px solid #E2E8F0; padding:0; background:#F8FAFC; }
+  .mat-edit-section { padding:12px; border-bottom:1px solid #E2E8F0; }
+  .mat-task-section { padding:12px; }
 
   /* ── CARDS / TABLE ───────────────────────────────────────────────────── */
   .card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; }
@@ -638,26 +644,32 @@ const css = `
   select.editor-input { width:auto; }
 
   /* ── RESPONSIVE — content area ─────────────────────────────────────── */
+  @media (max-width:1100px) {
+    .editor-grid { grid-template-columns:160px 1fr; }
+    .picker-card { width:160px; }
+  }
   @media (max-width:900px) {
-    .stats-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+    .stats-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
     .grid-2 { grid-template-columns:1fr; }
     .detail-body { grid-template-columns:1fr; }
     .sticky-card { position:static; }
     .editor-grid { grid-template-columns:1fr; }
-    .detail-hero { padding:20px 16px; }
+    .picker-card { width:100%; }
+    .detail-hero { padding:16px 14px; }
     .user-table th:nth-child(2), .user-table td:nth-child(2) { display:none; }
-    .module-card-inner { grid-template-columns:100px 1fr; }
+    .module-card-inner { grid-template-columns:90px 1fr; }
     .auth-wrap { grid-template-columns:1fr; }
     .auth-left { display:none; }
   }
-  @media (max-width:600px) {
-    .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
-    .module-card-inner { grid-template-columns:80px 1fr; }
-    .module-card-title { font-size:15px; }
-    .module-thumb { min-height:80px; font-size:28px; }
-    .page-title { font-size:20px; }
-    .stat-num { font-size:28px; }
-    .module-card-body { padding:12px 14px; }
+  @media (max-width:768px) {
+    .stats-grid { grid-template-columns:1fr 1fr; gap:8px; }
+    .module-card-inner { grid-template-columns:72px 1fr; }
+    .module-card-title { font-size:14px; }
+    .module-thumb { min-height:72px; font-size:24px; }
+    .page-title { font-size:18px; }
+    .stat-num { font-size:24px; }
+    .module-card-body { padding:10px 12px; }
+    .section-row { padding:10px 12px; gap:8px; }
   }
 `
 
@@ -1059,7 +1071,7 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
                                     </div>
                                     <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:14,fontWeight:700,color:"#003366"}}>{rc.weight} pts</span>
                                   </div>
-                                  <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6}}>
+                                  <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:4}}>
                                     {(rc.levels||defLv).map((lv,li)=>(
                                       <div key={li} style={{background:lv.bg,borderRadius:8,padding:"10px 10px"}}>
                                         <div style={{fontSize:13,fontWeight:700,color:lv.color,marginBottom:3}}>{lv.name}</div>
@@ -1676,8 +1688,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                 setSaved(true);
                 setTimeout(() => setSaved(false), 3000);
               }} style={{
-                padding:"8px 18px", background:"#CC0000", color:"#fff",
-                border:"none", borderRadius:8, fontSize:13, fontWeight:700,
+                padding:"8px 14px", background:"#CC0000", color:"#fff",
+                border:"none", borderRadius:8, fontSize:12, fontWeight:700,
                 cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap",
               }}>Save changes</button>
             </div>
@@ -1766,7 +1778,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                   <span className="card-head-title">Course Materials</span>
                   <span style={{fontSize:12,color:"#6B7E91"}}>All content students see inside this module</span>
                 </div>
-                <div style={{padding:"12px"}}>
+                <div style={{padding:"8px"}}>
 
                   {/* Existing materials list — collapsible accordion */}
                   {materials.length===0 && (
@@ -1786,8 +1798,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                     }}>
                       {/* ── Collapsed header row — always visible ── */}
                       <div style={{
-                        display:"flex",alignItems:"center",gap:12,
-                        padding:"12px 16px",cursor:"pointer",
+                        display:"flex",alignItems:"center",gap:8,
+                        padding:"10px 12px",cursor:"pointer",
                         background: isOpen?"#F0F4FA":"#fff",
                         transition:"background .15s",
                       }} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_open:!x._open}:x))}>
@@ -1837,9 +1849,9 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
 
                           {/* Edit form */}
                           <div style={{padding:"16px 18px",background:"#F8FAFC",borderBottom:"1px solid #E2E8F0"}}>
-                            <div style={{fontSize:12,fontWeight:700,color:"#003366",letterSpacing:".08em",textTransform:"uppercase",marginBottom:14}}>Edit material</div>
+            <div style={{fontSize:11,fontWeight:700,color:"#003366",letterSpacing:".08em",textTransform:"uppercase",marginBottom:10}}>Edit material</div>
 
-                            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
                               <div>
                                 <label className="editor-label">Item type</label>
                                 <select className="editor-input" style={{marginBottom:0}} value={mat.itemType||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,itemType:e.target.value}:x))}>
@@ -1859,7 +1871,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                               <input className="editor-input" style={{marginBottom:0}} value={mat.title||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,title:e.target.value}:x))} placeholder="Title shown to students"/>
                             </div>
 
-                            <div style={{display:"grid",gridTemplateColumns:"1fr 120px",gap:12,marginBottom:0}}>
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 90px",gap:8,marginBottom:0}}>
                               <div>
                                 <label className="editor-label">URL</label>
                                 <input className="editor-input" style={{marginBottom:0}} value={mat.url||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,url:e.target.value}:x))} placeholder="https://..."/>
@@ -1905,10 +1917,10 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                               <div style={{background:"#FFFBEB",borderRadius:10,padding:"14px 16px",border:"1px solid #FEF3C7"}}>
                                 {/* Task type buttons */}
                                 <label className="editor-label">Task type</label>
-                                <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:14}}>
+                                <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:10}}>
                                   {["Assignment","Reflection","Quiz","Poll","Discussion","Group Work","Game / Simulation","Case Study","Presentation","Other"].map(t=>(
                                     <button key={t} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,type:t}}:x))} style={{
-                                      padding:"6px 12px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",
+                                      padding:"5px 9px",borderRadius:6,fontSize:11,fontWeight:600,cursor:"pointer",
                                       fontFamily:"'Plus Jakarta Sans',sans-serif",transition:"all .1s",
                                       background:(mat.task&&mat.task.type===t)?"#003366":"#fff",
                                       color:(mat.task&&mat.task.type===t)?"#fff":"#6B7E91",
@@ -2028,7 +2040,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                                         </div>
                                       </div>
                                       {/* Performance levels */}
-                                      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
+                                      <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:6}}>
                                         {(rc.levels||defLv).map((lv,li)=>(
                                           <div key={li} style={{background:lv.bg,borderRadius:9,padding:"11px 11px",display:"flex",flexDirection:"column",gap:7}}>
                                             <input value={lv.name} onChange={e=>updLv(li,"name",e.target.value)}
