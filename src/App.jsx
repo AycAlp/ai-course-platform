@@ -1731,149 +1731,154 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                 </div>
                 <div style={{padding:"20px 24px"}}>
 
-                  {/* Existing materials list */}
+                  {/* Existing materials list — collapsible accordion */}
                   {materials.length===0 && (
-                    <div style={{textAlign:"center",padding:"24px 0",color:"#9CA3AF",fontSize:14}}>No materials yet. Click Add content below to get started.</div>
+                    <div style={{textAlign:"center",padding:"32px 0",color:"#94A3B8",fontSize:15}}>
+                      No materials yet. Click <strong>Add content</strong> below to get started.
+                    </div>
                   )}
-                  {materials.map((mat,i)=>(
-                    <div key={mat.id} style={{marginBottom:12}}>
-                      {/* Material card */}
+                  {materials.map((mat,i)=>{
+                    const isOpen = !!mat._open;
+                    return (
+                    <div key={mat.id} style={{
+                      marginBottom:8, borderRadius:12,
+                      border:`1.5px solid ${isOpen?"#003366":"#E2E8F0"}`,
+                      overflow:"hidden",
+                      transition:"border-color .15s",
+                      background:"#fff",
+                    }}>
+                      {/* ── Collapsed header row — always visible ── */}
                       <div style={{
-                        display:"flex",alignItems:"flex-start",gap:14,
-                        padding:"14px 16px",background:"#F9FAFB",
-                        border:"1.5px solid #E5E7EB",borderRadius:10,
-                      }}>
+                        display:"flex",alignItems:"center",gap:12,
+                        padding:"12px 16px",cursor:"pointer",
+                        background: isOpen?"#F0F4FA":"#fff",
+                        transition:"background .15s",
+                      }} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_open:!x._open}:x))}>
+
+                        {/* Icon */}
                         <div style={{
-                          width:40,height:40,borderRadius:9,background:"#E8EDF3",
+                          width:36,height:36,borderRadius:9,
+                          background:isOpen?"#003366":"#E8EDF3",
                           display:"flex",alignItems:"center",justifyContent:"center",
-                          fontSize:20,flexShrink:0,
+                          fontSize:18,flexShrink:0,transition:"background .15s",
                         }}>{MODE_ICONS[mat.mode]||"📎"}</div>
+
+                        {/* Title + badges */}
                         <div style={{flex:1,minWidth:0}}>
-                          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
-                            <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:20,background:"#003366",color:"#fff",textTransform:"uppercase",letterSpacing:".06em"}}>{mat.itemType}</span>
-                            <span style={{fontSize:11,fontWeight:600,padding:"2px 8px",borderRadius:20,background:"#E8EDF3",color:"#003366"}}>{mat.mode}</span>
-                            {mat.dur && <span style={{fontSize:11,color:"#9CA3AF"}}>{mat.dur}</span>}
-                            {mat.task && <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:20,background:"#FFF5E8",color:"#A0600D"}}>📋 {mat.task.type}</span>}
+                          <div style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
+                            <span style={{fontSize:14,fontWeight:700,color:isOpen?"#003366":"#1E2A3B",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
+                              {mat.title||"Untitled"}
+                            </span>
+                            <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:20,background:"#003366",color:"#fff",textTransform:"uppercase",letterSpacing:".05em",flexShrink:0}}>{mat.itemType}</span>
+                            {mat.dur && <span style={{fontSize:11,color:"#94A3B8",flexShrink:0}}>{mat.dur}</span>}
+                            {mat.task && <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:20,background:"#FFF5E8",color:"#92400E",flexShrink:0}}>📋 {mat.task.type}</span>}
+                            {!mat.visible && <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:20,background:"#F1F5F9",color:"#64748B",flexShrink:0}}>Hidden</span>}
                           </div>
-                          <div style={{fontSize:14,fontWeight:600,color:"#0D1B2A",marginBottom:mat.url||mat.content||mat.fileName?4:0,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{mat.title||"Untitled"}</div>
-                          {mat.fileName && <div style={{fontSize:11,color:"#6B7E91",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>📎 {mat.fileName}</div>}
-                          {!mat.fileName && mat.url && <div style={{fontSize:11,color:"#0056D2",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{mat.url}</div>}
-                          {mat.content && <div style={{fontSize:12,color:"#6B7E91",marginTop:2,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{mat.content.slice(0,80)}{mat.content.length>80?"…":""}</div>}
-                          {mat.mode==="Image / Infographic" && mat.fileData && (
-                            <img src={mat.fileData} alt={mat.title} style={{marginTop:6,maxHeight:60,maxWidth:160,borderRadius:6,objectFit:"cover"}}/>
-                          )}
                         </div>
-                        <div style={{display:"flex",gap:6,flexShrink:0,flexDirection:"column",alignItems:"flex-end"}}>
-                          <div style={{display:"flex",gap:6}}>
-                            <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_editMode:!x._editMode}:x))} style={{
-                              padding:"5px 10px",background:mat._editMode?"#003366":"#E8EDF3",
-                              color:mat._editMode?"#fff":"#003366",border:"none",
-                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
-                            }}>{mat._editMode?"✓ Done":"✏ Edit"}</button>
-                            <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,visible:!x.visible}:x))} style={{
-                              padding:"5px 10px",background:mat.visible?"#E8F8F4":"#F3F4F6",
-                              color:mat.visible?"#00735A":"#9CA3AF",border:"none",
-                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
-                            }}>{mat.visible?"Visible":"Hidden"}</button>
-                            <button onClick={()=>setMaterials(materials.filter((_,j)=>j!==i))} style={{
-                              padding:"5px 10px",background:"#FEE2E2",color:"#DC2626",
-                              border:"none",borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
-                            }}>Remove</button>
-                          </div>
-                          {/* Toggle task below this material */}
-                          <button onClick={()=>setMaterials(materials.map((x,j)=>j===i
-                            ? {...x, _showTask:!x._showTask, task: x.task||{type:"Assignment",title:"",instructions:"",graded:true,rubric:null}}
-                            : x
-                          ))} style={{
-                            padding:"4px 10px",fontSize:11,fontWeight:700,cursor:"pointer",
-                            fontFamily:"'Plus Jakarta Sans',sans-serif",borderRadius:6,
-                            background:mat.task?"#FFF5E8":"#F3F4F6",
-                            color:mat.task?"#A0600D":"#6B7E91",
-                            border:mat.task?"1px solid #FCD34D":"1.5px solid #E5E7EB",
-                          }}>{mat.task?"✏ Edit task":"+ Add task"}</button>
+
+                        {/* Quick action buttons — always visible */}
+                        <div style={{display:"flex",alignItems:"center",gap:6,flexShrink:0}} onClick={e=>e.stopPropagation()}>
+                          <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,visible:!x.visible}:x))} title={mat.visible?"Hide from students":"Show to students"} style={{
+                            padding:"5px 10px",fontSize:11,fontWeight:700,cursor:"pointer",borderRadius:7,border:"none",
+                            fontFamily:"'Plus Jakarta Sans',sans-serif",
+                            background:mat.visible?"#F0FDF4":"#F1F5F9",
+                            color:mat.visible?"#166534":"#64748B",
+                          }}>{mat.visible?"👁 Visible":"👁 Hidden"}</button>
+                          <button onClick={()=>setMaterials(materials.filter((_,j)=>j!==i))} title="Remove this material" style={{
+                            padding:"5px 9px",background:"#FEF2F2",color:"#DC2626",
+                            border:"1px solid #FECACA",borderRadius:7,fontSize:13,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
+                          }}>✕</button>
                         </div>
+
+                        {/* Expand chevron */}
+                        <span style={{color:"#94A3B8",fontSize:16,flexShrink:0,transition:"transform .2s",transform:isOpen?"rotate(180deg)":"rotate(0deg)"}}>▼</span>
                       </div>
 
-                      {/* Inline edit panel — opens when instructor clicks Edit */}
-                      {mat._editMode && (
-                        <div style={{
-                          border:"1.5px solid #003366",borderRadius:"0 0 10px 10px",
-                          background:"#F0F4FA",padding:"16px 18px",marginTop:-2,
-                          borderTop:"1px solid #D0DCF0",
-                        }}>
-                          <div style={{fontSize:13,fontWeight:700,color:"#003366",marginBottom:14}}>✏ Edit material</div>
+                      {/* ── Expanded body ── */}
+                      {isOpen && (
+                        <div style={{borderTop:"1px solid #E2E8F0",padding:"0"}}>
 
-                          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
-                            <div>
-                              <label className="editor-label">Item type</label>
-                              <select className="editor-input" style={{marginBottom:0}} value={mat.itemType||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,itemType:e.target.value}:x))}>
-                                {ITEM_TYPES.map(t=><option key={t}>{t}</option>)}
-                              </select>
-                            </div>
-                            <div>
-                              <label className="editor-label">Format / mode</label>
-                              <select className="editor-input" style={{marginBottom:0}} value={mat.mode||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,mode:e.target.value}:x))}>
-                                {ITEM_MODES.map(m=><option key={m}>{m}</option>)}
-                              </select>
-                            </div>
-                          </div>
+                          {/* Edit form */}
+                          <div style={{padding:"16px 18px",background:"#F8FAFC",borderBottom:"1px solid #E2E8F0"}}>
+                            <div style={{fontSize:12,fontWeight:700,color:"#003366",letterSpacing:".08em",textTransform:"uppercase",marginBottom:14}}>Edit material</div>
 
-                          <div style={{marginBottom:12}}>
-                            <label className="editor-label">Title</label>
-                            <input className="editor-input" style={{marginBottom:0}} value={mat.title||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,title:e.target.value}:x))} placeholder="Title shown to students"/>
-                          </div>
-
-                          <div style={{display:"grid",gridTemplateColumns:"1fr 120px",gap:12,marginBottom:12}}>
-                            <div>
-                              <label className="editor-label">URL</label>
-                              <input className="editor-input" style={{marginBottom:0}} value={mat.url||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,url:e.target.value}:x))} placeholder="https://..."/>
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}}>
+                              <div>
+                                <label className="editor-label">Item type</label>
+                                <select className="editor-input" style={{marginBottom:0}} value={mat.itemType||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,itemType:e.target.value}:x))}>
+                                  {ITEM_TYPES.map(t=><option key={t}>{t}</option>)}
+                                </select>
+                              </div>
+                              <div>
+                                <label className="editor-label">Format</label>
+                                <select className="editor-input" style={{marginBottom:0}} value={mat.mode||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,mode:e.target.value}:x))}>
+                                  {ITEM_MODES.map(m=><option key={m}>{m}</option>)}
+                                </select>
+                              </div>
                             </div>
-                            <div>
-                              <label className="editor-label">Duration</label>
-                              <input className="editor-input" style={{marginBottom:0}} value={mat.dur||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,dur:e.target.value}:x))} placeholder="e.g. 20 min"/>
-                            </div>
-                          </div>
 
-                          {(mat.mode==="Written Text" || mat.itemType==="Reflection" || mat.itemType==="Assignment") && (
                             <div style={{marginBottom:12}}>
-                              <label className="editor-label">Written content / instructions</label>
-                              <textarea className="editor-textarea" rows={3} style={{marginBottom:0}} value={mat.content||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,content:e.target.value}:x))} placeholder="Write content here..."/>
+                              <label className="editor-label">Title</label>
+                              <input className="editor-input" style={{marginBottom:0}} value={mat.title||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,title:e.target.value}:x))} placeholder="Title shown to students"/>
                             </div>
-                          )}
 
-                          <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_editMode:false}:x))} style={{
-                            padding:"8px 20px",background:"#003366",color:"#fff",border:"none",
-                            borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
-                          }}>Done editing</button>
-                        </div>
-                      )}
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 120px",gap:12,marginBottom:0}}>
+                              <div>
+                                <label className="editor-label">URL</label>
+                                <input className="editor-input" style={{marginBottom:0}} value={mat.url||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,url:e.target.value}:x))} placeholder="https://..."/>
+                              </div>
+                              <div>
+                                <label className="editor-label">Duration</label>
+                                <input className="editor-input" style={{marginBottom:0}} value={mat.dur||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,dur:e.target.value}:x))} placeholder="e.g. 20 min"/>
+                              </div>
+                            </div>
 
-                      {/* Per-material task editor — shown when _showTask is true */}
-                      {mat._showTask && (
-                        <div style={{
-                          border:"1.5px solid #FCD34D",borderRadius:"0 0 10px 10px",
-                          background:"#FFFBEB",padding:"16px 18px",marginTop:-2,
-                          borderTop:"1px solid #FEF3C7",
-                        }}>
-                          <div style={{fontSize:13,fontWeight:700,color:"#92400E",marginBottom:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                            <span>📋 Task after this material</span>
-                            <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:null,_showTask:false}:x))}
-                              style={{background:"#FEE2E2",color:"#DC2626",border:"none",borderRadius:6,padding:"4px 10px",fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif"}}>Remove task</button>
+                            {(mat.mode==="Written Text"||mat.itemType==="Reflection"||mat.itemType==="Assignment") && (
+                              <div style={{marginTop:12}}>
+                                <label className="editor-label">Written content</label>
+                                <textarea className="editor-textarea" rows={3} style={{marginBottom:0}} value={mat.content||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,content:e.target.value}:x))} placeholder="Write content here..."/>
+                              </div>
+                            )}
                           </div>
 
-                          {/* Task type */}
-                          <label className="editor-label">Task type</label>
-                          <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:14}}>
-                            {["Assignment","Reflection","Quiz","Poll","Discussion","Group Work","Game / Simulation","Case Study","Presentation","Other"].map(t=>(
-                              <button key={t} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,type:t}}:x))} style={{
-                                padding:"6px 12px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",
-                                fontFamily:"'Plus Jakarta Sans',sans-serif",transition:"all .1s",
-                                background:(mat.task&&mat.task.type===t)?"#003366":"#fff",
-                                color:(mat.task&&mat.task.type===t)?"#fff":"#6B7E91",
-                                border:(mat.task&&mat.task.type===t)?"none":"1.5px solid #E5E7EB",
-                              }}>{t}</button>
-                            ))}
-                          </div>
+                          {/* Task section */}
+                          <div style={{padding:"14px 18px",background:"#fff"}}>
+                            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom: mat._showTask||mat.task ? 14 : 0}}>
+                              <div style={{fontSize:13,fontWeight:700,color:"#1E2A3B"}}>
+                                📋 Task after this material
+                                <span style={{fontSize:12,fontWeight:400,color:"#94A3B8",marginLeft:8}}>optional</span>
+                              </div>
+                              {!mat.task ? (
+                                <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_showTask:true,task:{type:"Assignment",title:"",instructions:"",graded:true,rubric:null}}:x))} style={{
+                                  padding:"6px 14px",fontSize:12,fontWeight:700,cursor:"pointer",borderRadius:8,
+                                  background:"#003366",color:"#fff",border:"none",
+                                  fontFamily:"'Plus Jakarta Sans',sans-serif",
+                                }}>+ Add task</button>
+                              ) : (
+                                <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:null,_showTask:false}:x))} style={{
+                                  padding:"6px 14px",fontSize:12,fontWeight:700,cursor:"pointer",borderRadius:8,
+                                  background:"#FEF2F2",color:"#DC2626",border:"1px solid #FECACA",
+                                  fontFamily:"'Plus Jakarta Sans',sans-serif",
+                                }}>Remove task</button>
+                              )}
+                            </div>
+
+                            {/* Task form — shown when task exists */}
+                            {(mat._showTask || mat.task) && mat.task && (
+                              <div style={{background:"#FFFBEB",borderRadius:10,padding:"14px 16px",border:"1px solid #FEF3C7"}}>
+                                {/* Task type buttons */}
+                                <label className="editor-label">Task type</label>
+                                <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:14}}>
+                                  {["Assignment","Reflection","Quiz","Poll","Discussion","Group Work","Game / Simulation","Case Study","Presentation","Other"].map(t=>(
+                                    <button key={t} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,type:t}}:x))} style={{
+                                      padding:"6px 12px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",
+                                      fontFamily:"'Plus Jakarta Sans',sans-serif",transition:"all .1s",
+                                      background:(mat.task&&mat.task.type===t)?"#003366":"#fff",
+                                      color:(mat.task&&mat.task.type===t)?"#fff":"#6B7E91",
+                                      border:(mat.task&&mat.task.type===t)?"none":"1.5px solid #E5E7EB",
+                                    }}>{t}</button>
+                                  ))}
+                                </div>
 
                           <label className="editor-label">Task title</label>
                           <input className="editor-input" style={{marginBottom:12}} value={mat.task&&mat.task.title||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,title:e.target.value}}:x))} placeholder="e.g. Reflection after reading"/>
@@ -2021,8 +2026,13 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                           </div>
                         </div>
                       )}
-                    </div>
-                  ))}
+                    </div>{/* end task form wrapper */}
+                  </div>{/* end task section */}
+                </div>
+              )}{/* end expanded body */}
+            </div> {/* end accordion item */}
+            );
+          })}  {/* end materials.map */}
 
                   {/* Add content panel */}
                   {!addingMat ? (
@@ -2427,7 +2437,7 @@ function StudentProgress({ users, onPreview }) {
   );
 }
 
-function Submissions({ submissions, gradeSubmission, onPreview }) {
+function Submissions({ submissions, gradeSubmission, onPreview, refreshSubmissions }) {
   const [filter, setFilter] = useState("pending");
   const [open, setOpen]     = useState(null);
   const [grades, setGrades]    = useState({});
@@ -2461,14 +2471,22 @@ function Submissions({ submissions, gradeSubmission, onPreview }) {
           <div>
             <div className="page-eyebrow">Instructor Tools</div>
             <div className="page-title">Submission Inbox</div>
-            <div className="page-desc">Task submissions from students · grades in real time</div>
+            <div className="page-desc">Task submissions from students · updates in real time</div>
           </div>
-          <button onClick={exportExcel} style={{
-            display:"flex",alignItems:"center",gap:8,marginTop:4,
-            padding:"10px 18px",background:"#1A7A3C",color:"#fff",
-            border:"none",borderRadius:8,fontSize:13,fontWeight:700,
-            cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",whiteSpace:"nowrap",
-          }}>📊 Export to Excel</button>
+          <div style={{display:"flex",gap:10,marginTop:4}}>
+            <button onClick={()=>refreshSubmissions&&refreshSubmissions()} style={{
+              display:"flex",alignItems:"center",gap:7,
+              padding:"10px 18px",background:"#F0F4FA",color:"#003366",
+              border:"1.5px solid #003366",borderRadius:10,fontSize:13,fontWeight:700,
+              cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
+            }}>↻ Refresh</button>
+            <button onClick={exportExcel} style={{
+              display:"flex",alignItems:"center",gap:8,
+              padding:"10px 18px",background:"#166534",color:"#fff",
+              border:"none",borderRadius:10,fontSize:13,fontWeight:700,
+              cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
+            }}>📊 Export Excel</button>
+          </div>
         </div>
       </div>
       <div className="page-body">
@@ -3037,11 +3055,11 @@ export default function App() {
     };
     load();
 
-    // ── REAL-TIME subscription — submissions appear instantly on instructor screen
+    // ── REAL-TIME subscription — catches submissions from OTHER devices/sessions
     const channel = sb.channel("realtime-submissions")
       .on("postgres_changes", { event:"INSERT", schema:"public", table:"submissions" }, payload => {
         const s = payload.new;
-        setSubmissions(prev => [{
+        const mapped = {
           ...s, id: s.id,
           studentId: s.student_id, studentName: s.student_name,
           studentInitials: s.student_initials, moduleId: s.module_id,
@@ -3050,7 +3068,12 @@ export default function App() {
           taskType: s.task_type, taskTitle: s.task_title,
           maxScore: s.max_score, wordCount: s.word_count,
           submittedAt: s.submitted_at, rubric: s.rubric||[],
-        }, ...prev]);
+        };
+        // Deduplicate — skip if already added by direct insert
+        setSubmissions(prev => {
+          if (prev.find(x => x.id === mapped.id)) return prev;
+          return [mapped, ...prev];
+        });
       })
       .on("postgres_changes", { event:"UPDATE", schema:"public", table:"submissions" }, payload => {
         const s = payload.new;
@@ -3132,28 +3155,77 @@ export default function App() {
   };
 
   const addSubmission = async (sub) => {
-    const { data } = await sb.from("submissions").insert({
-      student_id:       sub.studentId,
-      student_name:     sub.studentName,
-      student_initials: sub.studentInitials,
-      module_id:        sub.moduleId,
-      module_name:      sub.moduleName,
-      module_week:      sub.moduleWeek,
-      mat_index:        sub.matIndex,
-      mat_title:        sub.matTitle,
-      task_type:        sub.taskType,
-      task_title:       sub.taskTitle,
-      graded:           sub.graded,
-      max_score:        sub.maxScore||100,
-      rubric:           sub.rubric||[],
-      answer:           sub.answer,
-      word_count:       sub.wordCount,
+    // Build the DB row
+    const row = {
+      student_id:       sub.studentId || null,
+      student_name:     sub.studentName || "",
+      student_initials: sub.studentInitials || "",
+      module_id:        (typeof sub.moduleId === "number" && sub.moduleId > 0) ? sub.moduleId : null,
+      module_name:      sub.moduleName || "",
+      module_week:      sub.moduleWeek || 0,
+      mat_index:        sub.matIndex ?? 0,
+      mat_title:        sub.matTitle || "",
+      task_type:        sub.taskType || "Completion",
+      task_title:       sub.taskTitle || "",
+      graded:           sub.graded ?? false,
+      max_score:        sub.maxScore || 100,
+      rubric:           sub.rubric || [],
+      answer:           sub.answer || "",
+      word_count:       sub.wordCount || 0,
       status:           "pending",
-    }).select().single();
-    // Real-time subscription will add it to state automatically
+    };
+
+    const { data, error } = await sb.from("submissions").insert(row).select().single();
+
+    if (error) {
+      console.error("Submission insert error:", error);
+      // Still update UI optimistically so student sees confirmation
+      const optimistic = { ...row, id: Date.now(), submittedAt: new Date().toISOString(), rubric: sub.rubric||[] };
+      setSubmissions(prev => [optimistic, ...prev]);
+      return;
+    }
+
+    // Always update state immediately — do not wait for realtime
+    if (data) {
+      const mapped = {
+        ...data,
+        studentId:       data.student_id,
+        studentName:     data.student_name,
+        studentInitials: data.student_initials,
+        moduleId:        data.module_id,
+        moduleName:      data.module_name,
+        moduleWeek:      data.module_week,
+        matIndex:        data.mat_index,
+        matTitle:        data.mat_title,
+        taskType:        data.task_type,
+        taskTitle:       data.task_title,
+        maxScore:        data.max_score,
+        wordCount:       data.word_count,
+        submittedAt:     data.submitted_at,
+        rubric:          Array.isArray(data.rubric) ? data.rubric : [],
+      };
+      // Add to state — realtime may also fire but the deduplicate check prevents duplicates
+      setSubmissions(prev => {
+        if (prev.find(s => s.id === mapped.id)) return prev;
+        return [mapped, ...prev];
+      });
+    }
   };
 
-  const gradeSubmission = async (id, grade, feedback) => {
+  const refreshSubmissions = async () => {
+    const { data: dbSubs } = await sb.from("submissions").select("*").order("submitted_at", {ascending:false});
+    if (dbSubs) setSubmissions(dbSubs.map(s => ({
+      ...s,
+      studentId:s.student_id, studentName:s.student_name,
+      studentInitials:s.student_initials, moduleId:s.module_id,
+      moduleName:s.module_name, moduleWeek:s.module_week,
+      matIndex:s.mat_index, matTitle:s.mat_title,
+      taskType:s.task_type, taskTitle:s.task_title,
+      maxScore:s.max_score, wordCount:s.word_count,
+      submittedAt:s.submitted_at, gradedAt:s.graded_at,
+      rubric:Array.isArray(s.rubric)?s.rubric:[],
+    })));
+  };
     setSubmissions(prev => prev.map(s => s.id===id ? {...s, grade, feedback, status:"graded"} : s));
     await sb.from("submissions").update({
       grade, feedback, status:"graded",
@@ -3197,7 +3269,7 @@ export default function App() {
     if (user.role === "instructor") {
       if (view==="editor")      return <ModuleEditor      modules={modules} updateModule={updateModule} deleteModule={deleteModule} reorderModules={reorderModules} onPreview={enterPreview}/>;
       if (view==="students")    return <StudentProgress   users={users} onPreview={enterPreview}/>;
-      if (view==="submissions") return <Submissions       submissions={submissions} gradeSubmission={gradeSubmission} onPreview={enterPreview}/>;
+      if (view==="submissions") return <Submissions       submissions={submissions} gradeSubmission={gradeSubmission} refreshSubmissions={refreshSubmissions} onPreview={enterPreview}/>;
       return <InstructorDashboard user={user} users={users} onPreview={enterPreview}/>;
     }
     if (user.role === "admin") {
