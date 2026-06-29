@@ -385,41 +385,45 @@ const css = `
   .btn-primary:hover { background:#CC0000; transform:translateY(-1px); box-shadow:0 4px 16px rgba(204,0,0,.3); }
 
   /* ── SHELL ────────────────────────────────────────────────────────────── */
-  .shell { display:grid; grid-template-columns:256px 1fr; min-height:100vh; width:100%; }
+  .shell { display:flex; min-height:100vh; width:100%; position:relative; }
 
   /* ── SIDEBAR ──────────────────────────────────────────────────────────── */
   .sidebar {
+    width:240px; flex-shrink:0;
     background:linear-gradient(180deg,#001F44 0%,#003366 100%);
-    display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
-    overflow-y:auto; flex-shrink:0; border-right:1px solid rgba(255,255,255,.06);
+    display:flex; flex-direction:column; position:fixed; top:0; left:0;
+    height:100vh; overflow-y:auto; z-index:100;
+    border-right:1px solid rgba(255,255,255,.06);
+    transition:transform .25s ease;
   }
-  .sidebar-logo { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .sidebar.mobile-hidden { transform:translateX(-100%); }
+  .sidebar-logo { padding:20px 18px 16px; border-bottom:1px solid rgba(255,255,255,.08); }
   .sidebar-logo-mark { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.2em; color:rgba(255,255,255,.5); text-transform:uppercase; display:block; margin-bottom:4px; }
-  .sidebar-logo-name { font-size:18px; font-weight:800; color:#fff; letter-spacing:-.01em; }
-  .sidebar-section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); padding:20px 20px 8px; }
-  .sidebar-nav { flex:1; padding:6px 10px; }
+  .sidebar-logo-name { font-size:17px; font-weight:800; color:#fff; letter-spacing:-.01em; }
+  .sidebar-section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); padding:16px 18px 6px; }
+  .sidebar-nav { flex:1; padding:4px 8px; }
   .nav-item {
-    display:flex; align-items:center; gap:12px; padding:11px 14px; font-size:15px;
-    font-weight:500; color:rgba(255,255,255,.6); cursor:pointer; transition:all .15s;
-    border-radius:10px; margin-bottom:2px; user-select:none;
+    display:flex; align-items:center; gap:10px; padding:10px 12px; font-size:14px;
+    font-weight:500; color:rgba(255,255,255,.65); cursor:pointer; transition:all .15s;
+    border-radius:9px; margin-bottom:2px; user-select:none;
   }
   .nav-item:hover { color:#fff; background:rgba(255,255,255,.1); }
-  .nav-item.active { color:#fff; background:#CC0000; box-shadow:0 4px 12px rgba(204,0,0,.4); }
-  .nav-icon { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+  .nav-item.active { color:#fff; background:#CC0000; box-shadow:0 4px 10px rgba(204,0,0,.35); }
+  .nav-icon { font-size:15px; width:18px; text-align:center; flex-shrink:0; }
   .sidebar-user {
-    padding:16px 14px; margin:10px;
+    padding:12px; margin:8px;
     border-radius:12px; background:rgba(255,255,255,.07);
-    display:flex; flex-direction:column; gap:12px;
+    display:flex; flex-direction:column; gap:10px;
   }
   .sidebar-user-top { display:flex; align-items:center; gap:10px; }
   .user-avatar {
-    width:38px; height:38px; border-radius:50%;
-    background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.3);
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.25);
     display:flex; align-items:center; justify-content:center;
-    font-size:14px; font-weight:800; color:#fff; flex-shrink:0;
+    font-size:13px; font-weight:800; color:#fff; flex-shrink:0;
   }
-  .user-name { font-size:14px; font-weight:700; color:#fff; }
-  .user-role { font-size:11px; color:rgba(255,255,255,.5); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; }
+  .user-name { font-size:13px; font-weight:700; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .user-role { font-size:10px; color:rgba(255,255,255,.5); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; }
   .logout-btn {
     width:100%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
     color:rgba(255,255,255,.8); cursor:pointer; font-size:13px; font-weight:600;
@@ -428,13 +432,47 @@ const css = `
   }
   .logout-btn:hover { background:#CC0000; color:#fff; border-color:#CC0000; }
 
+  /* Overlay for mobile when sidebar is open */
+  .sidebar-overlay {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.5);
+    z-index:99; backdrop-filter:blur(2px);
+  }
+  .sidebar-overlay.visible { display:block; }
+
+  /* ── MAIN CONTENT AREA ────────────────────────────────────────────────── */
+  .main-wrap { flex:1; margin-left:240px; min-width:0; display:flex; flex-direction:column; min-height:100vh; }
+
+  /* ── MOBILE TOP BAR ───────────────────────────────────────────────────── */
+  .mobile-topbar {
+    display:none; position:sticky; top:0; z-index:50;
+    background:#003366; padding:12px 16px;
+    align-items:center; gap:12px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .mobile-topbar-title { font-size:16px; font-weight:800; color:#fff; flex:1; }
+  .hamburger {
+    background:none; border:none; cursor:pointer; padding:4px;
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .hamburger span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:all .2s; }
+
   /* ── PAGE CHROME ──────────────────────────────────────────────────────── */
-  .main { background:#F0F2F7; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; }
-  .page-header { padding:28px 36px 24px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
-  .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#CC0000; margin-bottom:6px; font-weight:500; }
-  .page-title { font-size:28px; font-weight:800; color:#1E2A3B; margin-bottom:4px; letter-spacing:-.02em; }
-  .page-desc { font-size:15px; color:#64748B; font-weight:400; }
-  .page-body { padding:28px 36px; flex:1; }
+  .main { background:#F0F2F7; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; flex:1; }
+  .page-header { padding:22px 24px 18px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
+  .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#CC0000; margin-bottom:5px; font-weight:500; }
+  .page-title { font-size:24px; font-weight:800; color:#1E2A3B; margin-bottom:3px; letter-spacing:-.02em; }
+  .page-desc { font-size:14px; color:#64748B; font-weight:400; }
+  .page-body { padding:20px 24px; flex:1; }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+  @media (max-width:900px) {
+    .sidebar { transform:translateX(-100%); }
+    .sidebar.open { transform:translateX(0); }
+    .main-wrap { margin-left:0; }
+    .mobile-topbar { display:flex; }
+    .page-header { padding:16px 16px 14px; }
+    .page-body { padding:14px 16px; }
+  }
 
   /* ── STAT CARDS ──────────────────────────────────────────────────────── */
   .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; width:100%; }
@@ -599,28 +637,27 @@ const css = `
   .add-field { flex:1 1 160px; }
   select.editor-input { width:auto; }
 
-  /* ── MOBILE ───────────────────────────────────────────────────────────── */
-  @media (max-width:768px) {
-    .shell { grid-template-columns:1fr; }
-    .sidebar { display:none; }
-    .stats-grid { grid-template-columns:repeat(2,1fr); }
+  /* ── RESPONSIVE — content area ─────────────────────────────────────── */
+  @media (max-width:900px) {
+    .stats-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
     .grid-2 { grid-template-columns:1fr; }
-    .module-card-inner { grid-template-columns:90px 1fr; }
     .detail-body { grid-template-columns:1fr; }
     .sticky-card { position:static; }
     .editor-grid { grid-template-columns:1fr; }
-    .page-header { padding:18px 20px 14px; }
-    .page-body { padding:18px 20px; }
+    .detail-hero { padding:20px 16px; }
+    .user-table th:nth-child(2), .user-table td:nth-child(2) { display:none; }
+    .module-card-inner { grid-template-columns:100px 1fr; }
     .auth-wrap { grid-template-columns:1fr; }
     .auth-left { display:none; }
-    .detail-hero { padding:24px 20px; }
-    .user-table th:nth-child(2), .user-table td:nth-child(2) { display:none; }
   }
-  @media (max-width:480px) {
+  @media (max-width:600px) {
     .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
-    .module-thumb { min-height:90px; }
+    .module-card-inner { grid-template-columns:80px 1fr; }
     .module-card-title { font-size:15px; }
-    .page-title { font-size:22px; }
+    .module-thumb { min-height:80px; font-size:28px; }
+    .page-title { font-size:20px; }
+    .stat-num { font-size:28px; }
+    .module-card-body { padding:12px 14px; }
   }
 `
 
@@ -704,7 +741,7 @@ function AuthScreen({ onLogin, users }) {
   );
 }
 
-function Sidebar({ user, view, setView, onLogout }) {
+function Sidebar({ user, view, setView, onLogout, className="" }) {
   const navs = {
     learner:    [["dashboard","◈","Dashboard"],["modules","⊞","Course Modules"],["progress","◉","My Progress"]],
     instructor: [["dashboard","◈","Dashboard"],["editor","✎","Module Editor"],["students","◎","Student Progress"],["submissions","⊟","Submissions"]],
@@ -713,7 +750,7 @@ function Sidebar({ user, view, setView, onLogout }) {
   const items = navs[user.role] || navs.learner;
   const initials = user.name.split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase();
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${className}`}>
       <div className="sidebar-logo" style={{display:"flex",alignItems:"center",gap:12,padding:"18px 16px 16px"}}>
         <img
           src="/bilkent-logo.png"
@@ -2969,6 +3006,7 @@ export default function App() {
   const [previewMode, setPreviewMode] = useState(false);
   const [loading,     setLoading]     = useState(true);
   const [loadError,   setLoadError]   = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);  // mobile sidebar toggle
 
   // ── SHARED STATE — all backed by Supabase ─────────────────────────────────
   const [users,       setUsers]       = useState([]);
@@ -3252,8 +3290,6 @@ export default function App() {
 
   if (!user) return <><style>{css}</style><AuthScreen onLogin={u=>{setUser(u);setView("dashboard");}} users={users}/></>;
 
-  const go = v => { setView(v); };
-
   const enterPreview = () => { setPreviewMode(true);  setView("dashboard"); setMod(null); };
   const exitPreview  = () => { setPreviewMode(false); setView("dashboard"); setMod(null); };
 
@@ -3284,36 +3320,70 @@ export default function App() {
     ? { ...user, role:"learner", name: user.name + " (preview)" }
     : user;
 
+  const go = v => { setView(v); setSidebarOpen(false); };
+
+  const effectiveView = view;
+
   return (
     <><style>{css}</style>
     <div className="shell">
+
+      {/* Mobile overlay — darkens content when sidebar is open */}
+      <div
+        className={`sidebar-overlay ${sidebarOpen?"visible":""}`}
+        onClick={()=>setSidebarOpen(false)}
+      />
+
+      {/* Sidebar — fixed, slides in on mobile */}
       <Sidebar
         user={sidebarUser}
-        view={view}
+        view={effectiveView}
         setView={go}
-        onLogout={previewMode ? exitPreview : ()=>{setUser(null);setView("dashboard");setMod(null);}}
+        className={sidebarOpen?"open":""}
+        onLogout={previewMode ? exitPreview : ()=>{setUser(null);setView("dashboard");setMod(null);setSidebarOpen(false);}}
       />
-      <div style={{display:"flex",flexDirection:"column",width:"100%",minWidth:0,overflow:"hidden"}}>
+
+      {/* Everything to the right of the sidebar */}
+      <div className="main-wrap">
+
+        {/* Mobile top bar */}
+        <div className="mobile-topbar">
+          <button className="hamburger" onClick={()=>setSidebarOpen(!sidebarOpen)} aria-label="Open menu">
+            <span/><span/><span/>
+          </button>
+          <span className="mobile-topbar-title">AI Literacy 101</span>
+          <div style={{
+            width:32,height:32,borderRadius:"50%",
+            background:"rgba(255,255,255,.2)",
+            display:"flex",alignItems:"center",justifyContent:"center",
+            fontSize:12,fontWeight:800,color:"#fff",
+          }}>
+            {sidebarUser.name.split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase()}
+          </div>
+        </div>
+
         {/* Preview banner */}
         {previewMode && (
           <div style={{
             background:"#003366", color:"#fff",
-            padding:"12px 36px", display:"flex",
+            padding:"12px 24px", display:"flex",
             alignItems:"center", justifyContent:"space-between",
-            fontSize:14, fontWeight:500, zIndex:10,
+            fontSize:14, fontWeight:500, flexShrink:0,
           }}>
             <div style={{display:"flex",alignItems:"center",gap:10}}>
               <span style={{fontSize:18}}>👁</span>
               <span>Student preview — this is exactly what your students see.</span>
             </div>
             <button onClick={exitPreview} style={{
-              padding:"8px 18px", background:"rgba(255,255,255,.15)",
+              padding:"8px 16px", background:"rgba(255,255,255,.15)",
               color:"#fff", border:"1px solid rgba(255,255,255,.3)",
               borderRadius:8, fontSize:13, fontWeight:700,
               cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif",
+              whiteSpace:"nowrap", flexShrink:0,
             }}>Exit preview</button>
           </div>
         )}
+
         {renderMain()}
       </div>
     </div></>
