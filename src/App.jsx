@@ -959,11 +959,11 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
               const cfg = SECTION_ICONS[mat.type||"reading"] || SECTION_ICONS.activity;
               const taskKey = mod.id + "_" + i;
               const isSubmitted = taskSubmitted[taskKey];
+              const hasTask = mat.task && mat.task.title;
               return (
-                <div key={i}>
+                <div key={i} style={{borderBottom:"1px solid #F3F4F6"}}>
                   {/* Material row */}
-                  <div className="section-row"
-                    style={{cursor: mat.url ? "pointer" : "default"}}
+                  <div className="section-row" style={{borderBottom:"none",cursor:mat.url?"pointer":"default"}}
                     onClick={()=>{ if(mat.url) window.open(mat.url,"_blank","noreferrer"); }}>
                     <div className="section-icon-wrap" style={{background:(cfg.bg||"#003366")+"22"}}>
                       <span style={{fontSize:16}}>{cfg.icon||"📄"}</span>
@@ -975,152 +975,162 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
                       <a href={mat.url} target="_blank" rel="noreferrer"
                         onClick={e=>e.stopPropagation()}
                         style={{
-                          display:"inline-flex", alignItems:"center", gap:5,
-                          padding:"7px 16px", background:"#003366", color:"#fff",
-                          borderRadius:7, fontSize:14, fontWeight:700,
-                          textDecoration:"none", whiteSpace:"nowrap", flexShrink:0,
-                        }}>
-                        Open →
-                      </a>
+                          display:"inline-flex",alignItems:"center",gap:5,
+                          padding:"7px 16px",background:"#003366",color:"#fff",
+                          borderRadius:7,fontSize:14,fontWeight:700,
+                          textDecoration:"none",whiteSpace:"nowrap",flexShrink:0,
+                        }}>Open →</a>
                     )}
                   </div>
 
-                  {/* Task block — shown immediately after material if task is attached */}
-                  {mat.task && mat.task.title && (
-                    <div style={{
-                      margin:"0 0 8px 20px",
-                      border:"1.5px solid",
-                      borderColor: isSubmitted?"#A7F3D0":"#FCD34D",
-                      borderRadius:"0 0 10px 10px",
-                      background: isSubmitted?"#F0FDF4":"#FFFBEB",
-                      padding:"16px 20px",
-                      borderTop:"none",
-                    }}>
-                      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-                        <span style={{fontSize:13,fontWeight:700,padding:"3px 10px",borderRadius:20,background:isSubmitted?"#E8F8F4":"#FFF5E8",color:isSubmitted?"#00735A":"#92400E"}}>
-                          📋 {mat.task.type}
-                        </span>
-                        {mat.task.graded && <span style={{fontSize:11,color:"#6B7E91",fontWeight:600}}>Graded · Max {mat.task.maxScore||100} pts</span>}
-                        {isSubmitted && <span style={{fontSize:12,fontWeight:700,color:"#00735A"}}>✓ Submitted</span>}
-                      </div>
-                      <div style={{fontSize:15,fontWeight:700,color:"#0D1B2A",marginBottom:6}}>{mat.task.title}</div>
-                      {mat.task.instructions && <div style={{fontSize:14,color:"#374151",lineHeight:1.6,marginBottom:12}}>{mat.task.instructions}</div>}
+                  {/* Submit area — always shown for every material */}
+                  <div style={{
+                    margin:"0 16px 16px 16px",
+                    border:"1.5px solid",
+                    borderColor: isSubmitted?"#A7F3D0":"#E5E7EB",
+                    borderRadius:10,
+                    background: isSubmitted?"#F0FDF4":"#F9FAFB",
+                    padding:"16px 18px",
+                  }}>
+                    {/* If instructor added a task — show it */}
+                    {hasTask && (
+                      <>
+                        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10,flexWrap:"wrap"}}>
+                          <span style={{fontSize:13,fontWeight:700,padding:"3px 10px",borderRadius:20,
+                            background:isSubmitted?"#E8F8F4":"#FFF5E8",
+                            color:isSubmitted?"#00735A":"#92400E"}}>
+                            📋 {mat.task.type}
+                          </span>
+                          {mat.task.graded && (
+                            <span style={{fontSize:12,color:"#6B7E91",fontWeight:600}}>
+                              Graded · Max {mat.task.maxScore||100} pts
+                            </span>
+                          )}
+                          {isSubmitted && <span style={{fontSize:13,fontWeight:700,color:"#00735A"}}>✓ Submitted</span>}
+                        </div>
+                        <div style={{fontSize:15,fontWeight:700,color:"#0D1B2A",marginBottom:6}}>{mat.task.title}</div>
+                        {mat.task.instructions && (
+                          <div style={{fontSize:14,color:"#374151",lineHeight:1.6,marginBottom:14}}>{mat.task.instructions}</div>
+                        )}
 
-                      {/* Rubric display — matches instructor view with performance levels */}
-                      {mat.task.rubric && mat.task.rubric.length>0 && (
-                        <div style={{background:"#fff",borderRadius:10,padding:"16px 18px",marginBottom:14,border:"1px solid #E5E7EB"}}>
-                          <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
-                            <div style={{fontSize:14,fontWeight:700,color:"#0D1B2A"}}>Rubric</div>
-                            <div style={{fontSize:13,color:"#6B7E91"}}>Total: {mat.task.rubric.reduce((s,r)=>s+Number(r.weight),0)} / {mat.task.maxScore||100} pts</div>
-                          </div>
-                          {mat.task.rubric.map((rc,ri)=>{
-                            const defLv=[
-                              {name:"Excellent",    pts:"90–100",bg:"#E8EDF3",color:"#003366",desc:""},
-                              {name:"Good",         pts:"70–89", bg:"#FFE8E8",color:"#CC0000",desc:""},
-                              {name:"Satisfactory", pts:"50–69", bg:"#FFF8E8",color:"#A06000",desc:""},
-                              {name:"Needs work",   pts:"0–49",  bg:"#FEE2E2",color:"#DC2626",desc:""},
-                            ];
-                            return (
-                              <div key={ri} style={{border:"1.5px solid #E5E7EB",borderRadius:10,padding:"14px 14px",marginBottom:10,background:"#FAFAFA"}}>
-                                {/* Criterion header */}
-                                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
-                                  <div>
-                                    <div style={{fontSize:15,fontWeight:700,color:"#0D1B2A"}}>{rc.label}</div>
-                                    {rc.desc && <div style={{fontSize:13,color:"#6B7E91",marginTop:2}}>{rc.desc}</div>}
-                                  </div>
-                                  <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:15,fontWeight:700,color:"#003366"}}>{rc.weight} pts</span>
-                                </div>
-                                {/* Performance levels — read-only for students */}
-                                <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
-                                  {(rc.levels||defLv).map((lv,li)=>(
-                                    <div key={li} style={{background:lv.bg,borderRadius:9,padding:"11px 12px"}}>
-                                      <div style={{fontSize:14,fontWeight:700,color:lv.color,marginBottom:4}}>{lv.name}</div>
-                                      <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:12,color:"#5A6A7E",marginBottom:6}}>{lv.pts} pts</div>
-                                      {lv.desc && <div style={{fontSize:12,color:"#374151",lineHeight:1.45}}>{lv.desc}</div>}
-                                      {!lv.desc && <div style={{fontSize:12,color:"#9CA3AF",fontStyle:"italic",lineHeight:1.45}}>—</div>}
+                        {/* Rubric — read-only */}
+                        {mat.task.rubric && mat.task.rubric.length>0 && (
+                          <div style={{background:"#fff",borderRadius:10,padding:"14px 16px",marginBottom:14,border:"1px solid #E5E7EB"}}>
+                            <div style={{display:"flex",justifyContent:"space-between",marginBottom:12}}>
+                              <div style={{fontSize:14,fontWeight:700,color:"#0D1B2A"}}>Rubric</div>
+                              <div style={{fontSize:13,color:"#6B7E91"}}>Total: {mat.task.rubric.reduce((s,r)=>s+Number(r.weight),0)} / {mat.task.maxScore||100} pts</div>
+                            </div>
+                            {mat.task.rubric.map((rc,ri)=>{
+                              const defLv=[
+                                {name:"Excellent",    pts:"90–100",bg:"#E8EDF3",color:"#003366",desc:""},
+                                {name:"Good",         pts:"70–89", bg:"#FFE8E8",color:"#CC0000",desc:""},
+                                {name:"Satisfactory", pts:"50–69", bg:"#FFF8E8",color:"#A06000",desc:""},
+                                {name:"Needs work",   pts:"0–49",  bg:"#FEE2E2",color:"#DC2626",desc:""},
+                              ];
+                              return (
+                                <div key={ri} style={{border:"1.5px solid #E5E7EB",borderRadius:9,padding:"12px 14px",marginBottom:8,background:"#FAFAFA"}}>
+                                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+                                    <div>
+                                      <div style={{fontSize:14,fontWeight:700,color:"#0D1B2A"}}>{rc.label}</div>
+                                      {rc.desc && <div style={{fontSize:12,color:"#6B7E91",marginTop:2}}>{rc.desc}</div>}
                                     </div>
-                                  ))}
+                                    <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:14,fontWeight:700,color:"#003366"}}>{rc.weight} pts</span>
+                                  </div>
+                                  <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6}}>
+                                    {(rc.levels||defLv).map((lv,li)=>(
+                                      <div key={li} style={{background:lv.bg,borderRadius:8,padding:"10px 10px"}}>
+                                        <div style={{fontSize:13,fontWeight:700,color:lv.color,marginBottom:3}}>{lv.name}</div>
+                                        <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:11,color:"#5A6A7E",marginBottom:4}}>{lv.pts} pts</div>
+                                        {lv.desc
+                                          ? <div style={{fontSize:12,color:"#374151",lineHeight:1.4}}>{lv.desc}</div>
+                                          : <div style={{fontSize:12,color:"#9CA3AF",fontStyle:"italic"}}>—</div>
+                                        }
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {!isSubmitted ? (
-                        <>
-                          <textarea
-                            value={taskAnswers[taskKey]||""}
-                            onChange={e=>setTaskAnswers({...taskAnswers,[taskKey]:e.target.value})}
-                            placeholder="Write your answer here..."
-                            style={{
-                              width:"100%",minHeight:100,padding:"12px 14px",
-                              border:"1.5px solid #E5E7EB",borderRadius:8,
-                              fontSize:14,fontFamily:"'Inter',sans-serif",
-                              color:"#0D1B2A",resize:"vertical",outline:"none",
-                              lineHeight:1.6,background:"#fff",marginBottom:10,
-                            }}
-                            onFocus={e=>e.target.style.borderColor="#003366"}
-                            onBlur={e=>e.target.style.borderColor="#E5E7EB"}
-                          />
-                          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                            <span style={{fontSize:13,color:"#9CA3AF"}}>{(taskAnswers[taskKey]||"").split(/\s+/).filter(Boolean).length} words</span>
-                            <button onClick={()=>{
-                              const ans = taskAnswers[taskKey]||"";
-                              if(!ans.trim()) return;
-                              addSubmission({
-                                id: Date.now(),
-                                studentId: user?.id,
-                                studentName: user?.name||"Student",
-                                studentInitials: (user?.name||"S").split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase(),
-                                moduleId: mod.id,
-                                moduleName: mod.title,
-                                moduleWeek: mod.week,
-                                matIndex: i,
-                                matTitle: mat.title,
-                                taskType: mat.task.type,
-                                taskTitle: mat.task.title,
-                                graded: mat.task.graded,
-                                maxScore: mat.task.maxScore||100,
-                                rubric: mat.task.rubric||[],
-                                answer: ans,
-                                wordCount: ans.split(/\s+/).filter(Boolean).length,
-                                submittedAt: new Date().toISOString(),
-                                status:"pending",
-                                grade:null,
-                                feedback:"",
-                              });
-                              setTaskSubmitted({...taskSubmitted,[taskKey]:true});
-                            }} style={{
-                              padding:"9px 22px",background:"#CC0000",color:"#fff",
-                              border:"none",borderRadius:8,fontSize:14,fontWeight:700,
-                              cursor:"pointer",fontFamily:"'Inter',sans-serif",
-                            }}>Submit</button>
+                              );
+                            })}
                           </div>
-                        </>
-                      ) : (
-                        <div style={{fontSize:14,color:"#00735A",fontWeight:600,padding:"10px 0"}}>
-                          Your submission has been received. The instructor will review and grade it.
+                        )}
+                      </>
+                    )}
+
+                    {/* Submit form — always present */}
+                    {!isSubmitted ? (
+                      <>
+                        <textarea
+                          value={taskAnswers[taskKey]||""}
+                          onChange={e=>setTaskAnswers({...taskAnswers,[taskKey]:e.target.value})}
+                          placeholder={hasTask
+                            ? "Write your answer here..."
+                            : "Leave a note, reflection, or question about this material (optional)..."}
+                          style={{
+                            width:"100%",minHeight:hasTask?100:72,
+                            padding:"12px 14px",border:"1.5px solid #E5E7EB",
+                            borderRadius:8,fontSize:14,fontFamily:"'Inter',sans-serif",
+                            color:"#0D1B2A",resize:"vertical",outline:"none",
+                            lineHeight:1.6,background:"#fff",marginBottom:10,
+                          }}
+                          onFocus={e=>e.target.style.borderColor="#003366"}
+                          onBlur={e=>e.target.style.borderColor="#E5E7EB"}
+                        />
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                          <span style={{fontSize:13,color:"#9CA3AF"}}>
+                            {(taskAnswers[taskKey]||"").split(/\s+/).filter(Boolean).length} words
+                          </span>
+                          <button onClick={()=>{
+                            const ans = taskAnswers[taskKey]||"";
+                            // For tasks require text; for plain materials allow empty submit
+                            if(hasTask && !ans.trim()) return;
+                            addSubmission({
+                              studentId:       user?.id,
+                              studentName:     user?.name||"Student",
+                              studentInitials: (user?.name||"S").split(" ").map(n=>n[0]).join("").slice(0,2).toUpperCase(),
+                              moduleId:        mod.id,
+                              moduleName:      mod.title,
+                              moduleWeek:      mod.week,
+                              matIndex:        i,
+                              matTitle:        mat.title,
+                              taskType:        hasTask ? mat.task.type : "Completion",
+                              taskTitle:       hasTask ? mat.task.title : mat.title,
+                              graded:          hasTask ? mat.task.graded : false,
+                              maxScore:        hasTask ? (mat.task.maxScore||100) : 0,
+                              rubric:          hasTask ? (mat.task.rubric||[]) : [],
+                              answer:          ans,
+                              wordCount:       ans.split(/\s+/).filter(Boolean).length,
+                              submittedAt:     new Date().toISOString(),
+                              status:          "pending",
+                              grade:           null,
+                              feedback:        "",
+                            });
+                            setTaskSubmitted({...taskSubmitted,[taskKey]:true});
+                          }} style={{
+                            padding:"9px 24px",
+                            background: hasTask?"#CC0000":"#003366",
+                            color:"#fff",border:"none",borderRadius:8,
+                            fontSize:14,fontWeight:700,cursor:"pointer",
+                            fontFamily:"'Inter',sans-serif",
+                          }}>
+                            {hasTask ? "Submit" : "Mark as done"}
+                          </button>
                         </div>
-                      )}
-                    </div>
-                  )}
+                      </>
+                    ) : (
+                      <div style={{display:"flex",alignItems:"center",gap:10,fontSize:14,color:"#00735A",fontWeight:600}}>
+                        <span style={{fontSize:20}}>✓</span>
+                        {hasTask
+                          ? "Your submission has been received. The instructor will review and grade it."
+                          : "Marked as done."
+                        }
+                      </div>
+                    )}
+                  </div>
                 </div>
               );
             })}
           </div>
 
-          {/* Reflection */}
-          <div className="reflection-card">
-            <div className="reflection-title">Weekly reflection</div>
-            <div className="reflection-prompt">{mod.reflectionPrompt || "Write one paragraph. What did you think before the reading? What has changed in your understanding? Minimum 80 words. This is not a summary — it is a record of your thinking."}</div>
-            <textarea className="reflection-area" value={text} onChange={e=>{setText(e.target.value);setSaved(false);}} placeholder="Write your reflection here..." />
-            <div className="reflection-footer">
-              <span className="word-count">{wordCount} / 80 words minimum</span>
-              <button className="submit-btn" onClick={()=>setSaved(true)}>Submit reflection</button>
-            </div>
-            {saved && <div className="submit-ok">✓ Reflection submitted</div>}
-          </div>
         </div>
 
         {/* RIGHT RAIL */}
@@ -1680,9 +1690,6 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
 
                   <label className="editor-label">Estimated completion time</label>
                   <input className="editor-input" value={dur} onChange={e=>setDur(e.target.value)} style={{width:180}}/>
-
-                  <label className="editor-label" style={{marginTop:8}}>Weekly reflection prompt</label>
-                  <textarea className="editor-textarea" value={reflectionPrompt} onChange={e=>setReflectionPrompt(e.target.value)} rows={3}/>
 
                   <label className="editor-label">Overview text for students</label>
                   <textarea className="editor-textarea" value={overviewText} onChange={e=>setOverviewText(e.target.value)} rows={3}/>
