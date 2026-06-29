@@ -389,7 +389,7 @@ const css = `
 
   /* ── SIDEBAR ──────────────────────────────────────────────────────────── */
   .sidebar {
-    width:240px; flex-shrink:0;
+    width:200px; flex-shrink:0;
     background:linear-gradient(180deg,#001F44 0%,#003366 100%);
     display:flex; flex-direction:column; position:fixed; top:0; left:0;
     height:100vh; overflow-y:auto; z-index:100;
@@ -399,11 +399,11 @@ const css = `
   .sidebar.mobile-hidden { transform:translateX(-100%); }
   .sidebar-logo { padding:20px 18px 16px; border-bottom:1px solid rgba(255,255,255,.08); }
   .sidebar-logo-mark { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.2em; color:rgba(255,255,255,.5); text-transform:uppercase; display:block; margin-bottom:4px; }
-  .sidebar-logo-name { font-size:17px; font-weight:800; color:#fff; letter-spacing:-.01em; }
+  .sidebar-logo-name { font-size:15px; font-weight:800; color:#fff; letter-spacing:-.01em; }
   .sidebar-section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); padding:16px 18px 6px; }
   .sidebar-nav { flex:1; padding:4px 8px; }
   .nav-item {
-    display:flex; align-items:center; gap:10px; padding:10px 12px; font-size:14px;
+    display:flex; align-items:center; gap:8px; padding:8px 10px; font-size:13px;
     font-weight:500; color:rgba(255,255,255,.65); cursor:pointer; transition:all .15s;
     border-radius:9px; margin-bottom:2px; user-select:none;
   }
@@ -440,7 +440,7 @@ const css = `
   .sidebar-overlay.visible { display:block; }
 
   /* ── MAIN CONTENT AREA ────────────────────────────────────────────────── */
-  .main-wrap { flex:1; margin-left:240px; min-width:0; display:flex; flex-direction:column; min-height:100vh; }
+  .main-wrap { flex:1; margin-left:200px; min-width:0; max-width:calc(100vw - 200px); display:flex; flex-direction:column; min-height:100vh; overflow-x:hidden; }
 
   /* ── MOBILE TOP BAR ───────────────────────────────────────────────────── */
   .mobile-topbar {
@@ -458,17 +458,17 @@ const css = `
 
   /* ── PAGE CHROME ──────────────────────────────────────────────────────── */
   .main { background:#F0F2F7; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; flex:1; }
-  .page-header { padding:16px 20px 14px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
+  .page-header { padding:12px 16px 10px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
   .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#CC0000; margin-bottom:5px; font-weight:500; }
   .page-title { font-size:22px; font-weight:800; color:#1E2A3B; margin-bottom:2px; letter-spacing:-.02em; }
   .page-desc { font-size:14px; color:#64748B; font-weight:400; }
-  .page-body { padding:16px 20px; flex:1; }
+  .page-body { padding:12px 14px; flex:1; overflow-x:hidden; }
 
   /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
   @media (max-width:900px) {
     .sidebar { transform:translateX(-100%); }
     .sidebar.open { transform:translateX(0); }
-    .main-wrap { margin-left:0; }
+    .main-wrap { margin-left:0; max-width:100vw; }
     .mobile-topbar { display:flex; }
     .page-header { padding:16px 16px 14px; }
     .page-body { padding:14px 16px; }
@@ -477,8 +477,8 @@ const css = `
   /* ── STAT CARDS ──────────────────────────────────────────────────────── */
   .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; width:100%; }
   .stat-card {
-    background:#fff; border:1px solid #E2E8F0; border-radius:16px;
-    padding:22px 24px; transition:box-shadow .2s;
+    background:#fff; border:1px solid #E2E8F0; border-radius:12px;
+    padding:14px 16px; transition:box-shadow .2s;
   }
   .stat-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.07); }
   .stat-num { font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:500; color:#1E2A3B; line-height:1; margin-bottom:6px; }
@@ -501,7 +501,7 @@ const css = `
   .module-thumb-status { position:absolute; bottom:10px; right:10px; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; }
   .thumb-done { background:#003366; color:#fff; font-weight:800; }
   .thumb-active { background:#D97706; color:#fff; font-size:9px; font-weight:800; }
-  .module-card-body { padding:20px 24px; display:flex; flex-direction:column; }
+  .module-card-body { padding:14px 18px; display:flex; flex-direction:column; }
   .module-card-phase-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
   .phase-pill { display:inline-flex; align-items:center; gap:5px; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:600; background:var(--phase-bg); color:var(--phase-text); }
   .phase-dot { width:6px; height:6px; border-radius:50%; background:var(--phase-dot); flex-shrink:0; }
@@ -539,7 +539,7 @@ const css = `
   .detail-body { display:grid; grid-template-columns:1fr 320px; gap:24px; padding:28px 36px; align-items:start; text-align:left; }
 
   /* ── OUTCOMES / SKILLS / SECTIONS ────────────────────────────────────── */
-  .outcomes-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; padding:24px; margin-bottom:20px; text-align:left; }
+  .outcomes-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; padding:16px; margin-bottom:14px; text-align:left; }
   .outcomes-title { font-size:17px; font-weight:700; color:#1E2A3B; margin-bottom:16px; text-align:left; }
   .outcome-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
   .outcome-check { color:#003366; font-size:17px; flex-shrink:0; margin-top:2px; }
@@ -550,8 +550,8 @@ const css = `
   .skill-tag { padding:6px 14px; border:1.5px solid #E2E8F0; border-radius:20px; font-size:13px; font-weight:600; color:#374151; background:#F8FAFC; cursor:default; transition:all .12s; }
   .skill-tag:hover { border-color:#003366; color:#003366; background:#EEF3FB; }
   .sections-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; margin-bottom:20px; }
-  .sections-header { padding:18px 24px; border-bottom:1px solid #F1F5F9; font-size:17px; font-weight:700; color:#1E2A3B; }
-  .section-row { display:flex; align-items:center; gap:14px; padding:16px 24px; border-bottom:1px solid #F1F5F9; transition:background .1s; }
+  .sections-header { padding:14px 16px; border-bottom:1px solid #F1F5F9; font-size:15px; font-weight:700; color:#1E2A3B; }
+  .section-row { display:flex; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid #F1F5F9; transition:background .1s; }
   .section-row:hover { background:#FAFBFC; }
   .section-icon-wrap { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
   .section-label-pill { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#64748B; min-width:70px; }
@@ -581,8 +581,8 @@ const css = `
   .submit-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:8px; }
 
   /* ── INSTRUCTOR EDITOR ───────────────────────────────────────────────── */
-  .editor-grid { display:grid; grid-template-columns:220px 1fr; gap:16px; width:100%; }
-  .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .editor-grid { display:grid; grid-template-columns:170px 1fr; gap:10px; width:100%; overflow:hidden; box-sizing:border-box; }
+  .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; }
   .picker-head { padding:18px 20px; border-bottom:1px solid #F1F5F9; font-size:15px; font-weight:700; color:#1E2A3B; }
   .picker-list { padding:8px; }
   .picker-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; transition:all .12s; margin-bottom:2px; }
@@ -592,14 +592,14 @@ const css = `
   .picker-item.active .picker-week { color:rgba(255,255,255,.6); }
   .picker-name { font-size:13px; font-weight:600; color:#1E2A3B; }
   .picker-item.active .picker-name { color:#fff; }
-  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); min-width:0; }
+  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; min-width:0; width:100%; }
   .editor-head { padding:20px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
   .editor-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
-  .editor-body { padding:16px; }
+  .editor-body { padding:12px; overflow-x:hidden; }
   .editor-label { display:block; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; margin-bottom:8px; }
-  .editor-input { width:100%; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:all .2s; margin-bottom:18px; }
+  .editor-input { width:100%; padding:10px 12px; border:2px solid #E2E8F0; border-radius:8px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:all .2s; margin-bottom:18px; }
   .editor-input:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
-  .editor-textarea { width:100%; min-height:100px; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; resize:vertical; line-height:1.65; transition:all .2s; margin-bottom:18px; }
+  .editor-textarea { width:100%; min-height:80px; padding:10px 12px; border:2px solid #E2E8F0; border-radius:8px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; resize:vertical; line-height:1.65; transition:all .2s; margin-bottom:18px; }
   .editor-textarea:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
   .url-add-row { display:flex; gap:8px; margin-bottom:10px; }
   .url-input { flex:1; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; outline:none; transition:all .2s; }
@@ -611,8 +611,8 @@ const css = `
   .save-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:14px; }
 
   /* ── CARDS / TABLE ───────────────────────────────────────────────────── */
-  .card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
-  .card-head { padding:14px 18px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
+  .card { background:#fff; border:1px solid #E2E8F0; border-radius:12px; overflow:hidden; }
+  .card-head { padding:12px 16px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
   .card-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
   .btn-ghost { padding:9px 18px; background:transparent; color:#64748B; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .15s; }
   .btn-ghost:hover { border-color:#003366; color:#003366; background:#F0F4FF; }
@@ -1252,7 +1252,7 @@ function InstructorTopBar({ onPreview }) {
   return (
     <div style={{
       background:"#fff", borderBottom:"1px solid #F1F5F9",
-      padding:"10px 20px", display:"flex", alignItems:"center",
+      padding:"8px 16px", display:"flex", alignItems:"center",
       justifyContent:"space-between",
     }}>
       <div style={{display:"flex",alignItems:"center",gap:8}}>
@@ -1573,8 +1573,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                       pick(moved);
                     }}
                     style={{
-                      display:"flex", alignItems:"center", gap:6,
-                      padding:"8px 10px", borderRadius:8,
+                      display:"flex", alignItems:"center", gap:4,
+                      padding:"5px 7px", borderRadius:7,
                       background: isActive?"#0D1B2A":"transparent",
                       border:"2px solid transparent",
                       transition:"background .12s", marginBottom:2,
@@ -1603,8 +1603,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                         fontSize:12, flexShrink:0,
                       }}>{m.thumbnail}</div>
                       <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:12,fontWeight:600,color:isActive?"#fff":"#0D1B2A",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{m.title}</div>
-                        <div style={{fontSize:10,color:isActive?"rgba(255,255,255,.5)":"#9CA3AF",marginTop:1}}>Module {m.week}</div>
+                        <div style={{fontSize:11,fontWeight:600,color:isActive?"#fff":"#0D1B2A",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",lineHeight:1.2}}>{m.title}</div>
+                        <div style={{fontSize:10,color:isActive?"rgba(255,255,255,.5)":"#9CA3AF",marginTop:1}}>M{m.week}</div>
                       </div>
                     </div>
 
@@ -1676,8 +1676,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                 setSaved(true);
                 setTimeout(() => setSaved(false), 3000);
               }} style={{
-                padding:"10px 22px", background:"#CC0000", color:"#fff",
-                border:"none", borderRadius:8, fontSize:14, fontWeight:700,
+                padding:"8px 18px", background:"#CC0000", color:"#fff",
+                border:"none", borderRadius:8, fontSize:13, fontWeight:700,
                 cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap",
               }}>Save changes</button>
             </div>
@@ -1692,12 +1692,12 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
             <div style={{display:"flex",gap:0,marginBottom:14,background:"#fff",borderRadius:10,border:"1px solid #E5E7EB",overflow:"hidden"}}>
               {tabs.map(t=>(
                 <button key={t} onClick={()=>{setTab(t);setSaved(false);}} style={{
-                  flex:1, padding:"12px", background: activeTab===t?"#0D1B2A":"transparent",
-                  color: activeTab===t?"#fff":"#6B7E91", border:"none",
-                  fontSize:13, fontWeight:600, cursor:"pointer",
-                  fontFamily:"'Plus Jakarta Sans',sans-serif", textTransform:"capitalize", transition:"all .12s",
+                  flex:1, padding:"9px 2px", background: activeTab===t?"#1E2A3B":"transparent",
+                  color: activeTab===t?"#fff":"#64748B", border:"none",
+                  fontSize:11, fontWeight:700, cursor:"pointer",
+                  fontFamily:"'Plus Jakarta Sans',sans-serif", transition:"all .12s", whiteSpace:"nowrap", letterSpacing:".01em",
                 }}>
-                  {t==="content"?"Content":t==="outcomes"?"Learning Outcomes":t==="materials"?"Course Materials":"Settings"}
+                  {t==="content"?"Content":t==="outcomes"?"Outcomes":t==="materials"?"Materials":"Settings"}
                 </button>
               ))}
             </div>
@@ -1766,7 +1766,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                   <span className="card-head-title">Course Materials</span>
                   <span style={{fontSize:12,color:"#6B7E91"}}>All content students see inside this module</span>
                 </div>
-                <div style={{padding:"20px 24px"}}>
+                <div style={{padding:"12px"}}>
 
                   {/* Existing materials list — collapsible accordion */}
                   {materials.length===0 && (
@@ -2063,13 +2063,13 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                           </div>
                         </div>
                       )}
-                    </div>{/* end task form wrapper */}
-                  </div>{/* end task section */}
+                    </div>
+                  </div>
                 </div>
-              )}{/* end expanded body */}
-            </div> {/* end accordion item */}
+              )}
+            </div>
             );
-          })}  {/* end materials.map */}
+          })}
 
                   {/* Add content panel */}
                   {!addingMat ? (
