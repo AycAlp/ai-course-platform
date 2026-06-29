@@ -458,11 +458,11 @@ const css = `
 
   /* ── PAGE CHROME ──────────────────────────────────────────────────────── */
   .main { background:#F0F2F7; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; flex:1; }
-  .page-header { padding:22px 24px 18px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
+  .page-header { padding:16px 20px 14px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
   .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#CC0000; margin-bottom:5px; font-weight:500; }
-  .page-title { font-size:24px; font-weight:800; color:#1E2A3B; margin-bottom:3px; letter-spacing:-.02em; }
+  .page-title { font-size:22px; font-weight:800; color:#1E2A3B; margin-bottom:2px; letter-spacing:-.02em; }
   .page-desc { font-size:14px; color:#64748B; font-weight:400; }
-  .page-body { padding:20px 24px; flex:1; }
+  .page-body { padding:16px 20px; flex:1; }
 
   /* ── RESPONSIVE ───────────────────────────────────────────────────────── */
   @media (max-width:900px) {
@@ -475,19 +475,19 @@ const css = `
   }
 
   /* ── STAT CARDS ──────────────────────────────────────────────────────── */
-  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; width:100%; }
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; width:100%; }
   .stat-card {
     background:#fff; border:1px solid #E2E8F0; border-radius:16px;
     padding:22px 24px; transition:box-shadow .2s;
   }
   .stat-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.07); }
-  .stat-num { font-family:'IBM Plex Mono',monospace; font-size:38px; font-weight:500; color:#1E2A3B; line-height:1; margin-bottom:8px; }
+  .stat-num { font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:500; color:#1E2A3B; line-height:1; margin-bottom:6px; }
   .stat-num.teal { color:#003366; }
   .stat-num.amber { color:#D97706; }
   .stat-label { font-size:14px; color:#64748B; font-weight:500; }
 
   /* ── MODULE CARDS (Coursera style) ───────────────────────────────────── */
-  .module-grid { display:flex; flex-direction:column; gap:14px; }
+  .module-grid { display:flex; flex-direction:column; gap:10px; }
   .module-card {
     background:#fff; border:1px solid #E2E8F0; border-radius:16px;
     overflow:hidden; transition:all .2s; cursor:pointer;
@@ -581,7 +581,7 @@ const css = `
   .submit-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:8px; }
 
   /* ── INSTRUCTOR EDITOR ───────────────────────────────────────────────── */
-  .editor-grid { display:grid; grid-template-columns:272px 1fr; gap:24px; width:100%; }
+  .editor-grid { display:grid; grid-template-columns:220px 1fr; gap:16px; width:100%; }
   .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
   .picker-head { padding:18px 20px; border-bottom:1px solid #F1F5F9; font-size:15px; font-weight:700; color:#1E2A3B; }
   .picker-list { padding:8px; }
@@ -592,10 +592,10 @@ const css = `
   .picker-item.active .picker-week { color:rgba(255,255,255,.6); }
   .picker-name { font-size:13px; font-weight:600; color:#1E2A3B; }
   .picker-item.active .picker-name { color:#fff; }
-  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); min-width:0; }
   .editor-head { padding:20px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
   .editor-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
-  .editor-body { padding:24px; }
+  .editor-body { padding:16px; }
   .editor-label { display:block; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; margin-bottom:8px; }
   .editor-input { width:100%; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:all .2s; margin-bottom:18px; }
   .editor-input:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
@@ -612,7 +612,7 @@ const css = `
 
   /* ── CARDS / TABLE ───────────────────────────────────────────────────── */
   .card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
-  .card-head { padding:18px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
+  .card-head { padding:14px 18px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
   .card-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
   .btn-ghost { padding:9px 18px; background:transparent; color:#64748B; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .15s; }
   .btn-ghost:hover { border-color:#003366; color:#003366; background:#F0F4FF; }
@@ -1252,7 +1252,7 @@ function InstructorTopBar({ onPreview }) {
   return (
     <div style={{
       background:"#fff", borderBottom:"1px solid #F1F5F9",
-      padding:"12px 36px", display:"flex", alignItems:"center",
+      padding:"10px 20px", display:"flex", alignItems:"center",
       justifyContent:"space-between",
     }}>
       <div style={{display:"flex",alignItems:"center",gap:8}}>
@@ -1641,8 +1641,8 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
           <div>
             {/* Module header preview */}
             <div style={{
-              background:sel.color, borderRadius:12, padding:"20px 24px",
-              marginBottom:16, display:"flex", alignItems:"center", gap:16,
+              background:sel.color, borderRadius:12, padding:"14px 16px",
+              marginBottom:12, display:"flex", alignItems:"center", gap:12,
             }}>
               <div style={{fontSize:40}}>{sel.thumbnail}</div>
               <div style={{flex:1}}>
@@ -1689,7 +1689,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
             )}
 
             {/* Tabs */}
-            <div style={{display:"flex",gap:0,marginBottom:20,background:"#fff",borderRadius:10,border:"1px solid #E5E7EB",overflow:"hidden"}}>
+            <div style={{display:"flex",gap:0,marginBottom:14,background:"#fff",borderRadius:10,border:"1px solid #E5E7EB",overflow:"hidden"}}>
               {tabs.map(t=>(
                 <button key={t} onClick={()=>{setTab(t);setSaved(false);}} style={{
                   flex:1, padding:"12px", background: activeTab===t?"#0D1B2A":"transparent",
@@ -2543,7 +2543,7 @@ function Submissions({ submissions, gradeSubmission, onPreview, refreshSubmissio
         </div>
 
         {/* Filter tabs */}
-        <div style={{display:"flex",gap:0,marginBottom:20,background:"#fff",borderRadius:10,border:"1px solid #E5E7EB",overflow:"hidden",width:"fit-content"}}>
+        <div style={{display:"flex",gap:0,marginBottom:14,background:"#fff",borderRadius:10,border:"1px solid #E5E7EB",overflow:"hidden",width:"fit-content"}}>
           {[["pending","Pending"],["graded","Graded"],["all","All"]].map(([val,label])=>(
             <button key={val} onClick={()=>setFilter(val)} style={{
               padding:"10px 22px", background:filter===val?"#003366":"transparent",
@@ -2573,30 +2573,47 @@ function Submissions({ submissions, gradeSubmission, onPreview, refreshSubmissio
             return (
               <div key={s.id} className="card">
                 {/* Summary row */}
-                <div onClick={()=>setOpen(isOpen?null:s.id)} style={{
-                  display:"grid", gridTemplateColumns:"44px 1fr 1fr 120px 110px auto",
-                  alignItems:"center", gap:14, padding:"16px 20px", cursor:"pointer",
-                }}>
-                  <div style={{width:44,height:44,borderRadius:"50%",background:"#EEF3FB",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:13,color:"#003366",flexShrink:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:10,padding:"14px 16px"}}>
+                  {/* Avatar */}
+                  <div style={{width:36,height:36,borderRadius:"50%",background:"#EEF3FB",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700,fontSize:12,color:"#003366",flexShrink:0}}>
                     {s.studentInitials}
                   </div>
-                  <div>
-                    <div style={{fontSize:15,fontWeight:700,color:"#0D1B2A",marginBottom:2}}>{s.studentName}</div>
-                    <div style={{fontSize:12,color:"#9CA3AF"}}>Module {s.moduleWeek} · {s.moduleName}</div>
+                  {/* Clickable info area */}
+                  <div onClick={()=>setOpen(isOpen?null:s.id)} style={{flex:1,minWidth:0,cursor:"pointer",display:"grid",gridTemplateColumns:"1fr 1fr 100px",gap:8,alignItems:"center"}}>
+                    <div>
+                      <div style={{fontSize:14,fontWeight:700,color:"#1E2A3B",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.studentName}</div>
+                      <div style={{fontSize:12,color:"#94A3B8"}}>Module {s.moduleWeek} · {s.moduleName}</div>
+                    </div>
+                    <div style={{minWidth:0}}>
+                      <div style={{fontSize:13,fontWeight:600,color:"#374151",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{s.taskTitle||s.taskType}</div>
+                      <div style={{fontSize:11,color:"#94A3B8"}}>{s.taskType} · {s.wordCount} words</div>
+                    </div>
+                    <div style={{textAlign:"right"}}>
+                      <span style={{
+                        fontSize:12,fontWeight:700,padding:"3px 10px",borderRadius:20,
+                        background:s.status==="graded"?"#F0FDF4":"#FFF7ED",
+                        color:s.status==="graded"?"#166534":"#92400E",
+                      }}>{s.status==="graded"?"Graded":"Pending"}</span>
+                      {s.grade!=null && <div style={{fontSize:12,fontFamily:"'IBM Plex Mono',monospace",color:"#003366",fontWeight:700,marginTop:3}}>{s.grade}/{s.maxScore||100}</div>}
+                    </div>
                   </div>
-                  <div>
-                    <div style={{fontSize:13,fontWeight:600,color:"#374151"}}>{s.taskTitle}</div>
-                    <div style={{fontSize:11,color:"#9CA3AF"}}>{s.taskType} · {s.wordCount} words</div>
+                  {/* Action buttons */}
+                  <div style={{display:"flex",alignItems:"center",gap:6,flexShrink:0}} onClick={e=>e.stopPropagation()}>
+                    <button onClick={()=>setOpen(isOpen?null:s.id)} style={{
+                      padding:"6px 12px",background:"#F1F5F9",color:"#475569",border:"none",
+                      borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
+                    }}>{isOpen?"▲ Close":"▼ Grade"}</button>
+                    <button onClick={()=>{
+                      if(!window.confirm("Delete this submission? This cannot be undone.")) return;
+                      sb.from("submissions").delete().eq("id",s.id).then(()=>{
+                        setSubmissions(prev=>prev.filter(x=>x.id!==s.id));
+                      });
+                    }} style={{
+                      padding:"6px 10px",background:"#FEF2F2",color:"#DC2626",
+                      border:"1px solid #FECACA",borderRadius:7,fontSize:12,fontWeight:700,
+                      cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
+                    }}>✕</button>
                   </div>
-                  <div style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:13,color:"#003366",fontWeight:600}}>
-                    {s.grade!=null ? `${s.grade}/${s.maxScore||100}` : <span style={{color:"#9CA3AF"}}>Not graded</span>}
-                  </div>
-                  <span style={{
-                    fontSize:12,fontWeight:700,padding:"4px 12px",borderRadius:20,textAlign:"center",
-                    background:s.status==="graded"?"#E8F8F4":"#FFF5E8",
-                    color:s.status==="graded"?"#00735A":"#A0600D",
-                  }}>{s.status==="graded"?"Graded":"Pending"}</span>
-                  <span style={{color:"#9CA3AF",fontSize:18,userSelect:"none"}}>{isOpen?"▲":"▼"}</span>
                 </div>
 
                 {/* Expanded grading view */}
