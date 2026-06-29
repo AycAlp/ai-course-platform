@@ -669,7 +669,7 @@ const css = `
     .page-title { font-size:18px; }
     .stat-num { font-size:24px; }
     .module-card-body { padding:10px 12px; }
-    .section-row { padding:10px 12px; gap:8px; }
+    .section-row { padding:10px 12px; gap:8px; }:8px; }
   }
 `
 
