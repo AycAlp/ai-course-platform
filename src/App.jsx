@@ -1547,7 +1547,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
         <div className="page-desc">Select a module from the list, then edit its content using the tabs on the right.</div>
       </div>
       <div className="page-body">
-        <div style={{display:"grid",gridTemplateColumns:"280px 1fr",gap:20,alignItems:"start"}}>
+        <div className="editor-grid" style={{alignItems:"start"}}>
 
           {/* Module picker */}
           <div className="card" style={{position:"sticky",top:20}}>
@@ -2618,7 +2618,7 @@ function Submissions({ submissions, gradeSubmission, onPreview, refreshSubmissio
                     <button onClick={()=>{
                       if(!window.confirm("Delete this submission? This cannot be undone.")) return;
                       sb.from("submissions").delete().eq("id",s.id).then(()=>{
-                        setSubmissions(prev=>prev.filter(x=>x.id!==s.id));
+                        if(refreshSubmissions) refreshSubmissions();
                       });
                     }} style={{
                       padding:"6px 10px",background:"#FEF2F2",color:"#DC2626",
@@ -3293,6 +3293,8 @@ export default function App() {
       rubric:Array.isArray(s.rubric)?s.rubric:[],
     })));
   };
+
+  const gradeSubmission = async (id, grade, feedback) => {
     setSubmissions(prev => prev.map(s => s.id===id ? {...s, grade, feedback, status:"graded"} : s));
     await sb.from("submissions").update({
       grade, feedback, status:"graded",
@@ -3417,3 +3419,4 @@ export default function App() {
       </div>
     </div></>
   );
+}
