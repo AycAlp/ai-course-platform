@@ -669,7 +669,7 @@ const css = `
     .page-title { font-size:18px; }
     .stat-num { font-size:24px; }
     .module-card-body { padding:10px 12px; }
-    .section-row { padding:10px 12px; gap:8px; }:8px; }
+    .section-row { padding:10px 12px; gap:8px; }
   }
 `
 
@@ -1778,7 +1778,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                   <span className="card-head-title">Course Materials</span>
                   <span style={{fontSize:12,color:"#6B7E91"}}>All content students see inside this module</span>
                 </div>
-                <div style={{padding:"8px"}}>
+                <div style={{padding:"10px",boxSizing:"border-box"}}>
 
                   {/* Existing materials list — collapsible accordion */}
                   {materials.length===0 && (
@@ -1851,7 +1851,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                           <div style={{padding:"16px 18px",background:"#F8FAFC",borderBottom:"1px solid #E2E8F0"}}>
             <div style={{fontSize:11,fontWeight:700,color:"#003366",letterSpacing:".08em",textTransform:"uppercase",marginBottom:10}}>Edit material</div>
 
-                            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                            <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8,marginBottom:8}}>
                               <div>
                                 <label className="editor-label">Item type</label>
                                 <select className="editor-input" style={{marginBottom:0}} value={mat.itemType||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,itemType:e.target.value}:x))}>
@@ -1871,7 +1871,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                               <input className="editor-input" style={{marginBottom:0}} value={mat.title||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,title:e.target.value}:x))} placeholder="Title shown to students"/>
                             </div>
 
-                            <div style={{display:"grid",gridTemplateColumns:"1fr 90px",gap:8,marginBottom:0}}>
+                            <div style={{display:"grid",gridTemplateColumns:"1fr 80px",gap:8,marginBottom:0}}>
                               <div>
                                 <label className="editor-label">URL</label>
                                 <input className="editor-input" style={{marginBottom:0}} value={mat.url||""} onChange={e=>setMaterials(materials.map((x,j)=>j===i?{...x,url:e.target.value}:x))} placeholder="https://..."/>
@@ -1917,7 +1917,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                               <div style={{background:"#FFFBEB",borderRadius:10,padding:"14px 16px",border:"1px solid #FEF3C7"}}>
                                 {/* Task type buttons */}
                                 <label className="editor-label">Task type</label>
-                                <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:10}}>
+                                <div style={{display:"flex",flexWrap:"wrap",gap:4,marginBottom:10,width:"100%"}}>
                                   {["Assignment","Reflection","Quiz","Poll","Discussion","Group Work","Game / Simulation","Case Study","Presentation","Other"].map(t=>(
                                     <button key={t} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,type:t}}:x))} style={{
                                       padding:"5px 9px",borderRadius:6,fontSize:11,fontWeight:600,cursor:"pointer",
