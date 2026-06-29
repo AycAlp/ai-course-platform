@@ -343,298 +343,286 @@ const INITIAL_USERS = [
 
 // ── CSS ───────────────────────────────────────────────────────────────────────
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap');
-  *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
   html, body, #root { height:100%; width:100%; margin:0; padding:0; }
-  body { font-family:'Inter',sans-serif; background:#F5F7FA; color:#1A1A2E; min-height:100vh; overflow-x:hidden; }
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:#F0F2F7; color:#1E2A3B; min-height:100vh; overflow-x:hidden; }
 
-  /* AUTH */
+  /* ── AUTH ──────────────────────────────────────────────────────────────── */
   .auth-wrap { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; }
-  .auth-left { background:#003366; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:56px 48px; text-align:center; position:relative; overflow:hidden; }
-  .auth-left::before { content:''; position:absolute; top:-100px; right:-100px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle,#CC000022 0%,transparent 70%); pointer-events:none; }
-  .auth-logo { font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.18em; color:#FFFFFF; text-transform:uppercase; margin-bottom:16px; }
-  .auth-h1 { font-size:40px; font-weight:700; line-height:1.15; color:#fff; margin-bottom:18px; max-width:380px; }
-  .auth-sub { font-size:15px; color:#6B7E91; line-height:1.7; max-width:360px; margin-bottom:48px; }
-  .auth-stats { display:flex; gap:40px; }
-  .auth-stat-n { font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:500; color:#00C9A7; }
-  .auth-stat-l { font-size:12px; color:#6B7E91; margin-top:3px; }
-  .auth-right { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:40px 48px; background:#FFFFFF; }
-  .auth-form-title { font-size:26px; font-weight:700; margin-bottom:6px; color:#0D1B2A; }
-  .auth-form-sub { font-size:14px; color:#6B7E91; margin-bottom:36px; }
-  .role-tabs { display:flex; margin-bottom:28px; border:1.5px solid #EDE9E1; border-radius:8px; overflow:hidden; }
-  .role-tab { flex:1; padding:10px; text-align:center; font-size:13px; font-weight:500; cursor:pointer; background:#fff; color:#6B7E91; border:none; transition:all .15s; font-family:'Inter',sans-serif; }
-  .role-tab.active { background:#003366; color:#fff; }
-  .form-group { margin-bottom:18px; }
-  .form-label { display:block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#6B7E91; margin-bottom:7px; }
-  .form-input { width:100%; padding:12px 14px; border:1.5px solid #EDE9E1; border-radius:8px; font-size:14px; font-family:'Inter',sans-serif; background:#fff; color:#0D1B2A; outline:none; transition:border-color .15s; }
-  .form-input:focus { border-color:#003366; }
-  .btn-primary { width:100%; padding:14px; background:#003366; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; }
-  .btn-primary:hover { background:#CC0000; }
+  .auth-left {
+    background:linear-gradient(145deg,#003366 0%,#001F44 60%,#0A0A2E 100%);
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:56px 52px; text-align:center; position:relative; overflow:hidden;
+  }
+  .auth-left::before {
+    content:''; position:absolute; width:500px; height:500px; border-radius:50%;
+    background:radial-gradient(circle,rgba(204,0,0,.18) 0%,transparent 65%);
+    top:-100px; right:-120px; pointer-events:none;
+  }
+  .auth-left::after {
+    content:''; position:absolute; width:300px; height:300px; border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 65%);
+    bottom:-60px; left:-60px; pointer-events:none;
+  }
+  .auth-right {
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:48px 56px; background:#fff;
+  }
+  .form-group { margin-bottom:20px; width:100%; }
+  .form-label { display:block; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; margin-bottom:8px; }
+  .form-input {
+    width:100%; padding:14px 16px; border:2px solid #E2E8F0; border-radius:12px;
+    font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; background:#fff;
+    color:#1E2A3B; outline:none; transition:all .2s;
+  }
+  .form-input:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.08); }
+  .btn-primary {
+    width:100%; padding:15px; background:#003366; color:#fff; border:none;
+    border-radius:12px; font-size:16px; font-weight:700; cursor:pointer;
+    font-family:'Plus Jakarta Sans',sans-serif; transition:all .2s; letter-spacing:.01em;
+  }
+  .btn-primary:hover { background:#CC0000; transform:translateY(-1px); box-shadow:0 4px 16px rgba(204,0,0,.3); }
 
-  /* SHELL — full viewport, no max-width anywhere */
-  .shell { display:grid; grid-template-columns:220px 1fr; min-height:100vh; width:100%; }
+  /* ── SHELL ────────────────────────────────────────────────────────────── */
+  .shell { display:grid; grid-template-columns:256px 1fr; min-height:100vh; width:100%; }
 
-  /* SIDEBAR */
-  .sidebar { background:#003366; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto; flex-shrink:0; }
-  .sidebar-logo { padding:22px 18px 16px; border-bottom:1px solid #004080; }
-  .sidebar-logo-mark { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.2em; color:#FFFFFF; opacity:.7; text-transform:uppercase; display:block; margin-bottom:3px; }
-  .sidebar-logo-name { font-size:17px; font-weight:700; color:#fff; }
-  .sidebar-section-label { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.5); padding:16px 18px 6px; }
-  .sidebar-nav { flex:1; padding:4px 0; }
-  .nav-item { display:flex; align-items:center; gap:10px; padding:12px 18px; font-size:16px; font-weight:500; color:rgba(255,255,255,.65); cursor:pointer; transition:all .12s; border-left:3px solid transparent; user-select:none; }
-  .nav-item:hover { color:#fff; background:#004080; }
-  .nav-item.active { color:#fff; background:#CC0000; border-left-color:#FF4444; }
-  .nav-icon { font-size:15px; width:18px; text-align:center; }
-  .sidebar-user { padding:14px 18px; border-top:1px solid #004080; display:flex; align-items:center; gap:10px; }
-  .user-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:#FFFFFF; flex-shrink:0; }
-  .user-name { font-size:15px; font-weight:700; color:#fff; }
-  .user-role { font-size:12px; color:rgba(255,255,255,.55); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.05em; }
-  .logout-btn { margin-left:auto; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); cursor:pointer; font-size:13px; font-weight:600; padding:6px 12px; border-radius:6px; transition:all .12s; font-family:'Inter',sans-serif; }
+  /* ── SIDEBAR ──────────────────────────────────────────────────────────── */
+  .sidebar {
+    background:linear-gradient(180deg,#001F44 0%,#003366 100%);
+    display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
+    overflow-y:auto; flex-shrink:0; border-right:1px solid rgba(255,255,255,.06);
+  }
+  .sidebar-logo { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,.08); }
+  .sidebar-logo-mark { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.2em; color:rgba(255,255,255,.5); text-transform:uppercase; display:block; margin-bottom:4px; }
+  .sidebar-logo-name { font-size:18px; font-weight:800; color:#fff; letter-spacing:-.01em; }
+  .sidebar-section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.35); padding:20px 20px 8px; }
+  .sidebar-nav { flex:1; padding:6px 10px; }
+  .nav-item {
+    display:flex; align-items:center; gap:12px; padding:11px 14px; font-size:15px;
+    font-weight:500; color:rgba(255,255,255,.6); cursor:pointer; transition:all .15s;
+    border-radius:10px; margin-bottom:2px; user-select:none;
+  }
+  .nav-item:hover { color:#fff; background:rgba(255,255,255,.1); }
+  .nav-item.active { color:#fff; background:#CC0000; box-shadow:0 4px 12px rgba(204,0,0,.4); }
+  .nav-icon { font-size:16px; width:20px; text-align:center; flex-shrink:0; }
+  .sidebar-user {
+    padding:16px 14px; margin:10px;
+    border-radius:12px; background:rgba(255,255,255,.07);
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .sidebar-user-top { display:flex; align-items:center; gap:10px; }
+  .user-avatar {
+    width:38px; height:38px; border-radius:50%;
+    background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:800; color:#fff; flex-shrink:0;
+  }
+  .user-name { font-size:14px; font-weight:700; color:#fff; }
+  .user-role { font-size:11px; color:rgba(255,255,255,.5); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; }
+  .logout-btn {
+    width:100%; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+    color:rgba(255,255,255,.8); cursor:pointer; font-size:13px; font-weight:600;
+    padding:8px 12px; border-radius:8px; transition:all .15s;
+    font-family:'Plus Jakarta Sans',sans-serif; text-align:center;
+  }
   .logout-btn:hover { background:#CC0000; color:#fff; border-color:#CC0000; }
 
-  /* PAGE CHROME — full width, zero wasted space */
-  .main { background:#F3F4F6; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; }
-  .page-header { padding:20px 32px 16px; border-bottom:1px solid #E5E7EB; background:#fff; flex-shrink:0; }
-  .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:#CC0000; margin-bottom:4px; }
-  .page-title { font-size:26px; font-weight:700; color:#0D1B2A; margin-bottom:3px; }
-  .page-desc { font-size:15px; color:#6B7E91; }
-  .page-body { padding:20px 32px; flex:1; }
+  /* ── PAGE CHROME ──────────────────────────────────────────────────────── */
+  .main { background:#F0F2F7; overflow-y:auto; width:100%; min-width:0; display:flex; flex-direction:column; }
+  .page-header { padding:28px 36px 24px; border-bottom:1px solid #E2E8F0; background:#fff; flex-shrink:0; }
+  .page-eyebrow { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:#CC0000; margin-bottom:6px; font-weight:500; }
+  .page-title { font-size:28px; font-weight:800; color:#1E2A3B; margin-bottom:4px; letter-spacing:-.02em; }
+  .page-desc { font-size:15px; color:#64748B; font-weight:400; }
+  .page-body { padding:28px 36px; flex:1; }
 
-  /* STATS */
-  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; width:100%; }
-  .stat-card { background:#fff; border:1px solid #E5E7EB; border-radius:10px; padding:18px 20px; }
-  .stat-num { font-family:'IBM Plex Mono',monospace; font-size:36px; font-weight:500; color:#0D1B2A; line-height:1; margin-bottom:5px; }
+  /* ── STAT CARDS ──────────────────────────────────────────────────────── */
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; width:100%; }
+  .stat-card {
+    background:#fff; border:1px solid #E2E8F0; border-radius:16px;
+    padding:22px 24px; transition:box-shadow .2s;
+  }
+  .stat-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.07); }
+  .stat-num { font-family:'IBM Plex Mono',monospace; font-size:38px; font-weight:500; color:#1E2A3B; line-height:1; margin-bottom:8px; }
   .stat-num.teal { color:#003366; }
-  .stat-num.amber { color:#F5A623; }
-  .stat-label { font-size:14px; color:#6B7E91; font-weight:500; }
+  .stat-num.amber { color:#D97706; }
+  .stat-label { font-size:14px; color:#64748B; font-weight:500; }
 
-  /* ── COURSERA-STYLE MODULE CARD ────────────────────────────────────────── */
-  .module-grid { display:flex; flex-direction:column; gap:12px; }
-
+  /* ── MODULE CARDS (Coursera style) ───────────────────────────────────── */
+  .module-grid { display:flex; flex-direction:column; gap:14px; }
   .module-card {
-    background:#fff;
-    border:1px solid #E5E7EB;
-    border-radius:12px;
-    overflow:hidden;
-    transition:box-shadow .15s, border-color .15s;
-    cursor:pointer;
+    background:#fff; border:1px solid #E2E8F0; border-radius:16px;
+    overflow:hidden; transition:all .2s; cursor:pointer;
   }
-  .module-card:hover { box-shadow:0 4px 18px rgba(0,0,0,.10); border-color:#D1D5DB; }
-  .module-card.locked { opacity:.6; cursor:default; }
-  .module-card.locked:hover { box-shadow:none; border-color:#E5E7EB; }
-
-  .module-card-inner { display:grid; grid-template-columns:140px 1fr; min-height:120px; }
-
-  /* thumbnail */
-  .module-thumb {
-    display:flex; align-items:center; justify-content:center;
-    font-size:36px;
-    background:var(--thumb-bg,#1A3A5C);
-    position:relative;
-    min-height:130px;
-  }
-  .module-thumb-week {
-    position:absolute; top:8px; left:8px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:10px; font-weight:500;
-    color:rgba(255,255,255,.7);
-    letter-spacing:.08em;
-    text-transform:uppercase;
-  }
-  .module-thumb-status {
-    position:absolute; bottom:8px; right:8px;
-    width:22px; height:22px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:11px;
-  }
-  .thumb-done { background:#003366; color:#fff; font-weight:700; }
-  .thumb-active { background:#F5A623; color:#0D1B2A; font-size:9px; font-weight:700; }
-
-  /* card body */
-  .module-card-body { padding:16px 20px; display:flex; flex-direction:column; }
-  .module-card-phase-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
-  .phase-pill {
-    display:inline-flex; align-items:center; gap:5px;
-    padding:2px 10px; border-radius:20px;
-    font-size:13px; font-weight:600;
-    background:var(--phase-bg); color:var(--phase-text);
-  }
-  .phase-dot { width:6px; height:6px; border-radius:50%; background:var(--phase-dot); }
-  .module-card-title { font-size:18px; font-weight:700; color:#0D1B2A; margin-bottom:3px; line-height:1.3; }
-  .module-card-subtitle { font-size:15px; color:#6B7E91; line-height:1.5; margin-bottom:10px; flex:1; }
+  .module-card:hover { box-shadow:0 8px 32px rgba(0,0,0,.1); transform:translateY(-2px); border-color:#CBD5E1; }
+  .module-card.locked { opacity:.55; cursor:default; }
+  .module-card.locked:hover { box-shadow:none; transform:none; border-color:#E2E8F0; }
+  .module-card-inner { display:grid; grid-template-columns:148px 1fr; min-height:130px; }
+  .module-thumb { display:flex; align-items:center; justify-content:center; font-size:40px; background:var(--thumb-bg,#1A3A5C); position:relative; min-height:130px; }
+  .module-thumb-week { position:absolute; top:10px; left:10px; font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:500; color:rgba(255,255,255,.65); letter-spacing:.08em; text-transform:uppercase; }
+  .module-thumb-status { position:absolute; bottom:10px; right:10px; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; }
+  .thumb-done { background:#003366; color:#fff; font-weight:800; }
+  .thumb-active { background:#D97706; color:#fff; font-size:9px; font-weight:800; }
+  .module-card-body { padding:20px 24px; display:flex; flex-direction:column; }
+  .module-card-phase-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .phase-pill { display:inline-flex; align-items:center; gap:5px; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:600; background:var(--phase-bg); color:var(--phase-text); }
+  .phase-dot { width:6px; height:6px; border-radius:50%; background:var(--phase-dot); flex-shrink:0; }
+  .module-card-title { font-size:17px; font-weight:700; color:#1E2A3B; margin-bottom:4px; line-height:1.3; letter-spacing:-.01em; }
+  .module-card-subtitle { font-size:14px; color:#64748B; line-height:1.55; margin-bottom:12px; flex:1; }
   .module-card-meta { display:flex; align-items:center; gap:16px; }
-  .meta-dur { font-size:14px; color:#6B7E91; display:flex; align-items:center; gap:5px; }
-  .meta-sections { font-size:14px; color:#6B7E91; }
+  .meta-dur { font-size:13px; color:#64748B; display:flex; align-items:center; gap:5px; }
+  .meta-sections { font-size:13px; color:#64748B; }
   .card-open-btn {
-    margin-left:auto;
-    padding:6px 16px;
-    background:#0056D2;
-    color:#fff;
-    border:none;
-    border-radius:6px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    font-family:'Inter',sans-serif;
-    white-space:nowrap;
-    transition:background .15s;
+    margin-left:auto; padding:8px 18px; background:#003366; color:#fff; border:none;
+    border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;
+    font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap; transition:all .15s;
   }
-  .card-open-btn:hover { background:#004AB5; }
-  .card-open-btn.locked-btn { background:#E5E7EB; color:#9CA3AF; cursor:default; }
+  .card-open-btn:hover { background:#CC0000; }
+  .card-open-btn.locked-btn { background:#E2E8F0; color:#94A3B8; cursor:default; }
 
-  /* ── COURSERA-STYLE MODULE DETAIL ───────────────────────────────────────── */
-  .detail-wrap { background:#F3F4F6; }
+  /* ── MODULE DETAIL ────────────────────────────────────────────────────── */
+  .detail-wrap { background:#F0F2F7; }
   .detail-hero {
-    background:var(--hero-bg,#0D1B2A);
-    padding:24px 32px;
-    color:#fff;
+    background:var(--hero-bg,#003366); padding:36px 36px 32px; color:#fff;
+    position:relative; overflow:hidden;
   }
-  .detail-back { display:inline-flex; align-items:center; gap:6px; font-size:15px; color:rgba(255,255,255,.6); cursor:pointer; border:none; background:none; font-family:'Inter',sans-serif; margin-bottom:20px; transition:color .12s; }
+  .detail-hero::after {
+    content:''; position:absolute; right:-60px; top:-60px;
+    width:280px; height:280px; border-radius:50%;
+    background:rgba(255,255,255,.05); pointer-events:none;
+  }
+  .detail-back { display:inline-flex; align-items:center; gap:6px; font-size:14px; color:rgba(255,255,255,.65); cursor:pointer; border:none; background:none; font-family:'Plus Jakarta Sans',sans-serif; margin-bottom:20px; transition:color .12s; padding:0; }
   .detail-back:hover { color:#fff; }
-  .detail-week-badge { font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.75); margin-bottom:8px; }
-  .detail-title { font-size:32px; font-weight:700; margin-bottom:6px; line-height:1.2; }
-  .detail-subtitle { font-size:17px; color:rgba(255,255,255,.7); margin-bottom:16px; max-width:620px; }
-  .detail-meta-row { display:flex; align-items:center; gap:20px; }
-  .detail-meta-item { font-size:15px; color:rgba(255,255,255,.6); display:flex; align-items:center; gap:5px; }
+  .detail-week-badge { font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:rgba(255,255,255,.65); margin-bottom:10px; }
+  .detail-title { font-size:32px; font-weight:800; margin-bottom:8px; line-height:1.2; letter-spacing:-.02em; }
+  .detail-subtitle { font-size:16px; color:rgba(255,255,255,.75); margin-bottom:18px; max-width:640px; line-height:1.6; }
+  .detail-meta-row { display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+  .detail-meta-item { font-size:14px; color:rgba(255,255,255,.6); display:flex; align-items:center; gap:6px; }
+  .detail-body { display:grid; grid-template-columns:1fr 320px; gap:24px; padding:28px 36px; align-items:start; text-align:left; }
 
-  .detail-body { display:grid; grid-template-columns:1fr 340px; gap:24px; padding:20px 32px; align-items:start; text-align:left; }
-
-  /* outcomes + sections */
-  .outcomes-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:24px; margin-bottom:20px; text-align:left; }
-  .outcomes-title { font-size:17px; font-weight:700; color:#0D1B2A; margin-bottom:14px; text-align:left; }
-  .outcome-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-  .outcome-check { color:#003366; font-size:17px; flex-shrink:0; margin-top:1px; }
-  .outcome-text { font-size:16px; color:#374151; line-height:1.55; }
-
-  .skills-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:24px; margin-bottom:20px; }
-  .skills-title { font-size:17px; font-weight:700; color:#0D1B2A; margin-bottom:12px; }
+  /* ── OUTCOMES / SKILLS / SECTIONS ────────────────────────────────────── */
+  .outcomes-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; padding:24px; margin-bottom:20px; text-align:left; }
+  .outcomes-title { font-size:17px; font-weight:700; color:#1E2A3B; margin-bottom:16px; text-align:left; }
+  .outcome-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
+  .outcome-check { color:#003366; font-size:17px; flex-shrink:0; margin-top:2px; }
+  .outcome-text { font-size:15px; color:#374151; line-height:1.6; }
+  .skills-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; padding:24px; margin-bottom:20px; }
+  .skills-title { font-size:17px; font-weight:700; color:#1E2A3B; margin-bottom:14px; }
   .skills-wrap { display:flex; flex-wrap:wrap; gap:8px; }
-  .skill-tag {
-    padding:5px 12px;
-    border:1.5px solid #E5E7EB;
-    border-radius:20px;
-    font-size:14px;
-    font-weight:500;
-    color:#374151;
-    background:#F9FAFB;
-    cursor:default;
-    transition:all .12s;
-  }
-  .skill-tag:hover { border-color:#0056D2; color:#0056D2; background:#EEF3FB; }
+  .skill-tag { padding:6px 14px; border:1.5px solid #E2E8F0; border-radius:20px; font-size:13px; font-weight:600; color:#374151; background:#F8FAFC; cursor:default; transition:all .12s; }
+  .skill-tag:hover { border-color:#003366; color:#003366; background:#EEF3FB; }
+  .sections-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; margin-bottom:20px; }
+  .sections-header { padding:18px 24px; border-bottom:1px solid #F1F5F9; font-size:17px; font-weight:700; color:#1E2A3B; }
+  .section-row { display:flex; align-items:center; gap:14px; padding:16px 24px; border-bottom:1px solid #F1F5F9; transition:background .1s; }
+  .section-row:hover { background:#FAFBFC; }
+  .section-icon-wrap { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .section-label-pill { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#64748B; min-width:70px; }
+  .section-title { font-size:15px; font-weight:500; color:#1E2A3B; flex:1; }
+  .section-dur { font-size:13px; color:#94A3B8; white-space:nowrap; }
+  .section-link { font-size:13px; color:#003366; font-weight:700; white-space:nowrap; text-decoration:none; }
 
-  .sections-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; margin-bottom:20px; }
-  .sections-header { padding:18px 22px; border-bottom:1px solid #E5E7EB; font-size:17px; font-weight:700; color:#0D1B2A; }
-  .section-row { display:flex; align-items:center; gap:14px; padding:14px 20px; border-bottom:1px solid #F3F4F6; cursor:pointer; transition:background .1s; }
-  .section-row:last-child { border-bottom:none; }
-  .section-row:hover { background:#F9FAFB; }
-  .section-icon-wrap { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
-  .section-label-pill { font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#6B7E91; min-width:60px; }
-  .section-title { font-size:16px; font-weight:500; color:#0D1B2A; flex:1; }
-  .section-dur { font-size:14px; color:#9CA3AF; white-space:nowrap; }
-  .section-link { font-size:14px; color:#0056D2; font-weight:600; white-space:nowrap; text-decoration:none; }
-
-  /* SIDEBAR CARD (Coursera style right panel) */
+  /* ── ENROLL / PROGRESS SIDEBAR CARD ─────────────────────────────────── */
   .sticky-card { position:sticky; top:20px; }
-  .enroll-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; }
-  .enroll-thumb { height:140px; display:flex; align-items:center; justify-content:center; font-size:56px; }
-  .enroll-body { padding:20px; }
-  .enroll-progress-label { font-size:14px; color:#6B7E91; margin-bottom:8px; font-weight:500; }
-  .enroll-bar-wrap { height:8px; background:#E5E7EB; border-radius:4px; overflow:hidden; margin-bottom:16px; }
-  .enroll-bar-fill { height:100%; background:#00C9A7; border-radius:4px; }
-  .enroll-status-row { display:flex; justify-content:space-between; font-size:15px; margin-bottom:16px; }
-  .enroll-mark-btn { width:100%; padding:13px; background:#003366; color:#fff; border:none; border-radius:8px; font-size:16px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; margin-bottom:10px; transition:background .15s; }
+  .enroll-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.06); }
+  .enroll-thumb { height:150px; display:flex; align-items:center; justify-content:center; font-size:60px; }
+  .enroll-body { padding:22px; }
+  .enroll-progress-label { font-size:13px; color:#64748B; margin-bottom:10px; font-weight:600; }
+  .enroll-bar-wrap { height:8px; background:#E2E8F0; border-radius:4px; overflow:hidden; margin-bottom:16px; }
+  .enroll-bar-fill { height:100%; background:#003366; border-radius:4px; }
+  .enroll-status-row { display:flex; justify-content:space-between; font-size:14px; margin-bottom:18px; }
+  .enroll-mark-btn { width:100%; padding:14px; background:#003366; color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; margin-bottom:12px; transition:all .2s; }
   .enroll-mark-btn:hover { background:#CC0000; }
-  .enroll-mark-btn.done-btn { background:#E8EDF3; color:#003366; }
+  .enroll-mark-btn.done-btn { background:#F0F7FF; color:#003366; }
 
-  /* REFLECTION */
-  .reflection-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:24px; margin-bottom:20px; }
-  .reflection-title { font-size:17px; font-weight:700; color:#0D1B2A; margin-bottom:6px; }
-  .reflection-prompt { font-size:15px; color:#6B7E91; line-height:1.6; margin-bottom:14px; }
-  .reflection-area { width:100%; min-height:120px; padding:14px 16px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:16px; font-family:'Inter',sans-serif; color:#0D1B2A; resize:vertical; outline:none; background:#F9FAFB; line-height:1.6; transition:border-color .15s; }
-  .reflection-area:focus { border-color:#003366; background:#fff; }
-  .reflection-footer { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
-  .word-count { font-size:14px; color:#9CA3AF; }
-  .submit-btn { padding:11px 22px; background:#003366; color:#fff; border:none; border-radius:7px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; transition:background .15s; }
-  .submit-btn:hover { background:#CC0000; }
-  .submit-ok { background:#E8EDF3; border:1px solid #003366; border-radius:8px; padding:12px 16px; font-size:15px; color:#003366; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:7px; }
+  /* ── SUBMIT AREA ─────────────────────────────────────────────────────── */
+  .reflection-area { width:100%; min-height:120px; padding:14px 16px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; resize:vertical; outline:none; background:#FAFBFC; line-height:1.65; transition:all .2s; }
+  .reflection-area:focus { border-color:#003366; background:#fff; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
+  .word-count { font-size:13px; color:#94A3B8; }
+  .submit-btn { padding:12px 24px; background:#003366; color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .2s; }
+  .submit-btn:hover { background:#CC0000; transform:translateY(-1px); }
+  .submit-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:10px; display:flex; align-items:center; gap:8px; }
 
-  /* INSTRUCTOR EDITOR */
-  .editor-grid { display:grid; grid-template-columns:280px 1fr; gap:24px; width:100%; }
-  .picker-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; }
-  .picker-head { padding:16px 18px; border-bottom:1px solid #E5E7EB; font-size:15px; font-weight:700; color:#0D1B2A; }
-  .picker-list { padding:6px; }
-  .picker-item { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px; cursor:pointer; transition:all .12s; }
-  .picker-item:hover { background:#F3F4F6; }
-  .picker-item.active { background:#0D1B2A; }
-  .picker-week { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#6B7E91; min-width:28px; }
-  .picker-item.active .picker-week { color:#00C9A7; }
-  .picker-name { font-size:14px; font-weight:500; color:#0D1B2A; }
+  /* ── INSTRUCTOR EDITOR ───────────────────────────────────────────────── */
+  .editor-grid { display:grid; grid-template-columns:272px 1fr; gap:24px; width:100%; }
+  .picker-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .picker-head { padding:18px 20px; border-bottom:1px solid #F1F5F9; font-size:15px; font-weight:700; color:#1E2A3B; }
+  .picker-list { padding:8px; }
+  .picker-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; transition:all .12s; margin-bottom:2px; }
+  .picker-item:hover { background:#F8FAFC; }
+  .picker-item.active { background:#003366; }
+  .picker-week { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#64748B; min-width:28px; }
+  .picker-item.active .picker-week { color:rgba(255,255,255,.6); }
+  .picker-name { font-size:13px; font-weight:600; color:#1E2A3B; }
   .picker-item.active .picker-name { color:#fff; }
-  .editor-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; }
-  .editor-head { padding:16px 20px; border-bottom:1px solid #E5E7EB; display:flex; justify-content:space-between; align-items:center; }
-  .editor-head-title { font-size:17px; font-weight:700; color:#0D1B2A; }
-  .editor-body { padding:20px; }
-  .editor-label { display:block; font-size:13px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:#6B7E91; margin-bottom:7px; }
-  .editor-input { width:100%; padding:12px 14px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:16px; font-family:'Inter',sans-serif; color:#0D1B2A; background:#fff; outline:none; transition:border-color .15s; margin-bottom:16px; }
-  .editor-input:focus { border-color:#003366; }
-  .editor-textarea { width:100%; min-height:100px; padding:12px 14px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:16px; font-family:'Inter',sans-serif; color:#0D1B2A; background:#fff; outline:none; resize:vertical; line-height:1.6; transition:border-color .15s; margin-bottom:16px; }
-  .editor-textarea:focus { border-color:#003366; }
-  .url-add-row { display:flex; gap:8px; margin-bottom:8px; }
-  .url-input { flex:1; padding:11px 13px; border:1.5px solid #E5E7EB; border-radius:8px; font-size:15px; font-family:'Inter',sans-serif; color:#0D1B2A; outline:none; }
+  .editor-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .editor-head { padding:20px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
+  .editor-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
+  .editor-body { padding:24px; }
+  .editor-label { display:block; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; margin-bottom:8px; }
+  .editor-input { width:100%; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; transition:all .2s; margin-bottom:18px; }
+  .editor-input:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
+  .editor-textarea { width:100%; min-height:100px; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:15px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; background:#fff; outline:none; resize:vertical; line-height:1.65; transition:all .2s; margin-bottom:18px; }
+  .editor-textarea:focus { border-color:#003366; box-shadow:0 0 0 4px rgba(0,51,102,.07); }
+  .url-add-row { display:flex; gap:8px; margin-bottom:10px; }
+  .url-input { flex:1; padding:12px 14px; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-family:'Plus Jakarta Sans',sans-serif; color:#1E2A3B; outline:none; transition:all .2s; }
   .url-input:focus { border-color:#003366; }
-  .add-btn { padding:11px 16px; background:#F3F4F6; border:1.5px solid #E5E7EB; border-radius:8px; font-size:14px; font-weight:700; color:#0D1B2A; cursor:pointer; font-family:'Inter',sans-serif; white-space:nowrap; }
-  .save-btn { padding:11px 22px; background:#CC0000; color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; }
-  .save-ok { background:#E8F8F4; border:1px solid #A7F3D0; border-radius:8px; padding:12px 16px; font-size:15px; color:#00735A; font-weight:600; margin-top:12px; }
+  .add-btn { padding:12px 18px; background:#F8FAFC; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-weight:700; color:#1E2A3B; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap; transition:all .15s; }
+  .add-btn:hover { border-color:#003366; color:#003366; }
+  .save-btn { padding:12px 24px; background:#CC0000; color:#fff; border:none; border-radius:10px; font-size:15px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .2s; }
+  .save-btn:hover { background:#A80000; transform:translateY(-1px); }
+  .save-ok { background:#F0FDF4; border:1.5px solid #86EFAC; border-radius:10px; padding:12px 16px; font-size:14px; color:#166534; font-weight:600; margin-top:14px; }
 
-  /* ADMIN TABLE */
-  .card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; overflow:hidden; }
-  .card-head { padding:16px 20px; border-bottom:1px solid #E5E7EB; display:flex; justify-content:space-between; align-items:center; }
-  .card-head-title { font-size:17px; font-weight:700; color:#0D1B2A; }
-  .btn-ghost { padding:9px 18px; background:transparent; color:#6B7E91; border:1.5px solid #E5E7EB; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all .12s; }
-  .btn-ghost:hover { border-color:#0D1B2A; color:#0D1B2A; }
-  .btn-teal { padding:9px 18px; background:#CC0000; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; }
-  .btn-danger { padding:7px 14px; background:#FEE2E2; color:#DC2626; border:none; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; }
+  /* ── CARDS / TABLE ───────────────────────────────────────────────────── */
+  .card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+  .card-head { padding:18px 24px; border-bottom:1px solid #F1F5F9; display:flex; justify-content:space-between; align-items:center; }
+  .card-head-title { font-size:17px; font-weight:700; color:#1E2A3B; }
+  .btn-ghost { padding:9px 18px; background:transparent; color:#64748B; border:2px solid #E2E8F0; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .15s; }
+  .btn-ghost:hover { border-color:#003366; color:#003366; background:#F0F4FF; }
+  .btn-teal { padding:9px 18px; background:#CC0000; color:#fff; border:none; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .2s; }
+  .btn-teal:hover { background:#A80000; }
+  .btn-danger { padding:7px 14px; background:#FEF2F2; color:#DC2626; border:1.5px solid #FECACA; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif; transition:all .15s; }
+  .btn-danger:hover { background:#FEE2E2; }
   .user-table { width:100%; border-collapse:collapse; }
-  .user-table th { text-align:left; padding:11px 18px; font-size:13px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:#6B7E91; border-bottom:1px solid #E5E7EB; background:#F9FAFB; }
-  .user-table td { padding:15px 18px; font-size:15px; color:#0D1B2A; border-bottom:1px solid #F3F4F6; vertical-align:middle; }
+  .user-table th { text-align:left; padding:12px 20px; font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#64748B; border-bottom:1px solid #F1F5F9; background:#FAFBFC; }
+  .user-table td { padding:16px 20px; font-size:15px; color:#1E2A3B; border-bottom:1px solid #F8FAFC; vertical-align:middle; }
   .user-table tr:last-child td { border-bottom:none; }
-  .role-badge { display:inline-block; padding:4px 11px; border-radius:20px; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
-  .badge-learner { background:#E8EDF3; color:#003366; }
-  .badge-instructor { background:#E8F8F4; color:#00735A; }
-  .badge-admin { background:#FFF5E8; color:#A0600D; }
-  .bar-wrap { width:100px; height:6px; background:#E5E7EB; border-radius:3px; overflow:hidden; display:inline-block; }
-  .bar-fill { height:100%; background:#003366; border-radius:3px; }
+  .user-table tbody tr:hover td { background:#FAFBFC; }
+  .role-badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; }
+  .badge-learner { background:#EFF6FF; color:#1D4ED8; }
+  .badge-instructor { background:#F0FDF4; color:#166534; }
+  .badge-admin { background:#FFF7ED; color:#C2410C; }
+  .bar-wrap { width:110px; height:7px; background:#E2E8F0; border-radius:4px; overflow:hidden; display:inline-block; vertical-align:middle; }
+  .bar-fill { height:100%; background:#003366; border-radius:4px; transition:width .4s; }
   .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; width:100%; }
-  .add-user-card { background:#fff; border:1px solid #E5E7EB; border-radius:12px; padding:20px; margin-bottom:20px; }
+  .add-user-card { background:#fff; border:1px solid #E2E8F0; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
   .add-user-row { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
   .add-field { flex:1 1 160px; }
   select.editor-input { width:auto; }
-  /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────────── */
-  @media (max-width: 768px) {
+
+  /* ── MOBILE ───────────────────────────────────────────────────────────── */
+  @media (max-width:768px) {
     .shell { grid-template-columns:1fr; }
     .sidebar { display:none; }
     .stats-grid { grid-template-columns:repeat(2,1fr); }
     .grid-2 { grid-template-columns:1fr; }
-    .module-card-inner { grid-template-columns:80px 1fr; }
+    .module-card-inner { grid-template-columns:90px 1fr; }
     .detail-body { grid-template-columns:1fr; }
     .sticky-card { position:static; }
     .editor-grid { grid-template-columns:1fr; }
-    .page-header { padding:16px 20px 14px; }
-    .page-body { padding:16px 20px; }
+    .page-header { padding:18px 20px 14px; }
+    .page-body { padding:18px 20px; }
     .auth-wrap { grid-template-columns:1fr; }
     .auth-left { display:none; }
-    .detail-hero { padding:20px; }
-    .user-table th:nth-child(2),
-    .user-table td:nth-child(2) { display:none; }
+    .detail-hero { padding:24px 20px; }
+    .user-table th:nth-child(2), .user-table td:nth-child(2) { display:none; }
   }
-  @media (max-width: 480px) {
-    .stats-grid { grid-template-columns:1fr 1fr; gap:8px; }
-    .module-thumb { min-height:80px; }
-    .module-card-title { font-size:14px; }
-    .page-title { font-size:18px; }
+  @media (max-width:480px) {
+    .stats-grid { grid-template-columns:1fr 1fr; gap:10px; }
+    .module-thumb { min-height:90px; }
+    .module-card-title { font-size:15px; }
+    .page-title { font-size:22px; }
   }
-
-`;
+`
 
 // ── COMPONENTS ────────────────────────────────────────────────────────────────
 
@@ -759,17 +747,15 @@ function Sidebar({ user, view, setView, onLogout }) {
           </div>
         ))}
       </nav>
-      <div className="sidebar-user" style={{flexDirection:"column",alignItems:"stretch",gap:10,padding:"16px 18px"}}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
+      <div className="sidebar-user">
+        <div className="sidebar-user-top">
           <div className="user-avatar">{initials}</div>
           <div style={{flex:1,minWidth:0}}>
             <div className="user-name" style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{user.name}</div>
             <div className="user-role">{user.role}</div>
           </div>
         </div>
-        <button className="logout-btn" onClick={onLogout} style={{width:"100%",textAlign:"center"}}>
-          Sign out
-        </button>
+        <button className="logout-btn" onClick={onLogout}>Sign out</button>
       </div>
     </div>
   );
@@ -1068,7 +1054,7 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
                           style={{
                             width:"100%",minHeight:hasTask?100:72,
                             padding:"12px 14px",border:"1.5px solid #E5E7EB",
-                            borderRadius:8,fontSize:14,fontFamily:"'Inter',sans-serif",
+                            borderRadius:8,fontSize:14,fontFamily:"'Plus Jakarta Sans',sans-serif",
                             color:"#0D1B2A",resize:"vertical",outline:"none",
                             lineHeight:1.6,background:"#fff",marginBottom:10,
                           }}
@@ -1110,7 +1096,7 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
                             background: hasTask?"#CC0000":"#003366",
                             color:"#fff",border:"none",borderRadius:8,
                             fontSize:14,fontWeight:700,cursor:"pointer",
-                            fontFamily:"'Inter',sans-serif",
+                            fontFamily:"'Plus Jakarta Sans',sans-serif",
                           }}>
                             {hasTask ? "Submit" : "Mark as done"}
                           </button>
@@ -1228,20 +1214,22 @@ function LearnerProgress({ modules }) {
 function InstructorTopBar({ onPreview }) {
   return (
     <div style={{
-      background:"#fff", borderBottom:"1px solid #E5E7EB",
-      padding:"10px 32px", display:"flex", alignItems:"center",
+      background:"#fff", borderBottom:"1px solid #F1F5F9",
+      padding:"12px 36px", display:"flex", alignItems:"center",
       justifyContent:"space-between",
     }}>
       <div style={{display:"flex",alignItems:"center",gap:8}}>
-        <span style={{fontSize:12,color:"#6B7E91"}}>You are viewing the</span>
-        <span style={{fontSize:12,fontWeight:700,color:"#0D1B2A",background:"#F3F4F6",padding:"3px 10px",borderRadius:20}}>Instructor panel</span>
+        <span style={{width:8,height:8,borderRadius:"50%",background:"#CC0000",display:"inline-block",flexShrink:0}}/>
+        <span style={{fontSize:13,color:"#64748B",fontWeight:500}}>Instructor panel</span>
       </div>
       <button onClick={onPreview} style={{
         display:"flex", alignItems:"center", gap:8,
-        padding:"9px 18px", background:"#0056D2", color:"#fff",
-        border:"none", borderRadius:8, fontSize:13, fontWeight:700,
-        cursor:"pointer", fontFamily:"'Inter',sans-serif", transition:"background .15s",
-      }}>
+        padding:"9px 20px", background:"#003366", color:"#fff",
+        border:"none", borderRadius:10, fontSize:13, fontWeight:700,
+        cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", transition:"all .2s",
+      }}
+      onMouseEnter={e=>{e.currentTarget.style.background="#CC0000";}}
+      onMouseLeave={e=>{e.currentTarget.style.background="#003366";}}>
         <span>👁</span> Preview as student
       </button>
     </div>
@@ -1653,7 +1641,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
               }} style={{
                 padding:"10px 22px", background:"#CC0000", color:"#fff",
                 border:"none", borderRadius:8, fontSize:14, fontWeight:700,
-                cursor:"pointer", fontFamily:"'Inter',sans-serif", whiteSpace:"nowrap",
+                cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif", whiteSpace:"nowrap",
               }}>Save changes</button>
             </div>
 
@@ -1670,7 +1658,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                   flex:1, padding:"12px", background: activeTab===t?"#0D1B2A":"transparent",
                   color: activeTab===t?"#fff":"#6B7E91", border:"none",
                   fontSize:13, fontWeight:600, cursor:"pointer",
-                  fontFamily:"'Inter',sans-serif", textTransform:"capitalize", transition:"all .12s",
+                  fontFamily:"'Plus Jakarta Sans',sans-serif", textTransform:"capitalize", transition:"all .12s",
                 }}>
                   {t==="content"?"Content":t==="outcomes"?"Learning Outcomes":t==="materials"?"Course Materials":"Settings"}
                 </button>
@@ -1709,13 +1697,13 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                     <div key={i} style={{display:"flex",gap:10,alignItems:"flex-start",marginBottom:12}}>
                       <span style={{color:"#00A389",fontSize:16,marginTop:10,flexShrink:0}}>✓</span>
                       <textarea className="editor-textarea" value={o} onChange={e=>setOutcomes(outcomes.map((x,j)=>j===i?e.target.value:x))} rows={2} style={{marginBottom:0,flex:1}}/>
-                      <button onClick={()=>setOutcomes(outcomes.filter((_,j)=>j!==i))} style={{background:"#FEE2E2",color:"#DC2626",border:"none",borderRadius:6,padding:"8px 10px",cursor:"pointer",fontSize:14,fontFamily:"'Inter',sans-serif",marginTop:6,flexShrink:0}}>✕</button>
+                      <button onClick={()=>setOutcomes(outcomes.filter((_,j)=>j!==i))} style={{background:"#FEE2E2",color:"#DC2626",border:"none",borderRadius:6,padding:"8px 10px",cursor:"pointer",fontSize:14,fontFamily:"'Plus Jakarta Sans',sans-serif",marginTop:6,flexShrink:0}}>✕</button>
                     </div>
                   ))}
                   <button onClick={()=>setOutcomes([...outcomes,""])} style={{
                     marginTop:8,padding:"9px 16px",background:"#F3F4F6",
                     border:"1.5px dashed #D1D5DB",borderRadius:8,fontSize:13,
-                    color:"#6B7E91",cursor:"pointer",fontFamily:"'Inter',sans-serif",width:"100%",
+                    color:"#6B7E91",cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",width:"100%",
                   }}>+ Add learning outcome</button>
 
                   <div style={{marginTop:24}}>
@@ -1780,16 +1768,16 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                             <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_editMode:!x._editMode}:x))} style={{
                               padding:"5px 10px",background:mat._editMode?"#003366":"#E8EDF3",
                               color:mat._editMode?"#fff":"#003366",border:"none",
-                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                             }}>{mat._editMode?"✓ Done":"✏ Edit"}</button>
                             <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,visible:!x.visible}:x))} style={{
                               padding:"5px 10px",background:mat.visible?"#E8F8F4":"#F3F4F6",
                               color:mat.visible?"#00735A":"#9CA3AF",border:"none",
-                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                              borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                             }}>{mat.visible?"Visible":"Hidden"}</button>
                             <button onClick={()=>setMaterials(materials.filter((_,j)=>j!==i))} style={{
                               padding:"5px 10px",background:"#FEE2E2",color:"#DC2626",
-                              border:"none",borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                              border:"none",borderRadius:6,fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                             }}>Remove</button>
                           </div>
                           {/* Toggle task below this material */}
@@ -1798,7 +1786,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                             : x
                           ))} style={{
                             padding:"4px 10px",fontSize:11,fontWeight:700,cursor:"pointer",
-                            fontFamily:"'Inter',sans-serif",borderRadius:6,
+                            fontFamily:"'Plus Jakarta Sans',sans-serif",borderRadius:6,
                             background:mat.task?"#FFF5E8":"#F3F4F6",
                             color:mat.task?"#A0600D":"#6B7E91",
                             border:mat.task?"1px solid #FCD34D":"1.5px solid #E5E7EB",
@@ -1855,7 +1843,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
 
                           <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,_editMode:false}:x))} style={{
                             padding:"8px 20px",background:"#003366",color:"#fff",border:"none",
-                            borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                            borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                           }}>Done editing</button>
                         </div>
                       )}
@@ -1870,7 +1858,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                           <div style={{fontSize:13,fontWeight:700,color:"#92400E",marginBottom:12,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                             <span>📋 Task after this material</span>
                             <button onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:null,_showTask:false}:x))}
-                              style={{background:"#FEE2E2",color:"#DC2626",border:"none",borderRadius:6,padding:"4px 10px",fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif"}}>Remove task</button>
+                              style={{background:"#FEE2E2",color:"#DC2626",border:"none",borderRadius:6,padding:"4px 10px",fontSize:11,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif"}}>Remove task</button>
                           </div>
 
                           {/* Task type */}
@@ -1879,7 +1867,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                             {["Assignment","Reflection","Quiz","Poll","Discussion","Group Work","Game / Simulation","Case Study","Presentation","Other"].map(t=>(
                               <button key={t} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,type:t}}:x))} style={{
                                 padding:"6px 12px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",
-                                fontFamily:"'Inter',sans-serif",transition:"all .1s",
+                                fontFamily:"'Plus Jakarta Sans',sans-serif",transition:"all .1s",
                                 background:(mat.task&&mat.task.type===t)?"#003366":"#fff",
                                 color:(mat.task&&mat.task.type===t)?"#fff":"#6B7E91",
                                 border:(mat.task&&mat.task.type===t)?"none":"1.5px solid #E5E7EB",
@@ -1899,7 +1887,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                               <div style={{display:"flex",gap:6}}>
                                 {[["Yes",true],["No",false]].map(([lbl,val])=>(
                                   <button key={lbl} onClick={()=>setMaterials(materials.map((x,j)=>j===i?{...x,task:{...x.task,graded:val}}:x))} style={{
-                                    padding:"7px 14px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                                    padding:"7px 14px",borderRadius:7,fontSize:12,fontWeight:600,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                                     background:(mat.task&&mat.task.graded===val)?"#003366":"#fff",
                                     color:(mat.task&&mat.task.graded===val)?"#fff":"#6B7E91",
                                     border:(mat.task&&mat.task.graded===val)?"none":"1.5px solid #E5E7EB",
@@ -1934,7 +1922,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                                   {name:"Needs work",pts:"0–49",bg:"#FEE2E2",color:"#DC2626",desc:""},
                                 ]},
                               ]}}:x))} style={{
-                                padding:"7px 16px",fontSize:13,fontWeight:700,borderRadius:8,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                                padding:"7px 16px",fontSize:13,fontWeight:700,borderRadius:8,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                                 background:mat.task&&mat.task.showRubric?"#003366":"#fff",
                                 color:mat.task&&mat.task.showRubric?"#fff":"#6B7E91",
                                 border:mat.task&&mat.task.showRubric?"none":"1.5px solid #E5E7EB",
@@ -2002,7 +1990,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                                         {(rc.levels||defLv).map((lv,li)=>(
                                           <div key={li} style={{background:lv.bg,borderRadius:9,padding:"11px 11px",display:"flex",flexDirection:"column",gap:7}}>
                                             <input value={lv.name} onChange={e=>updLv(li,"name",e.target.value)}
-                                              style={{border:"1.5px solid rgba(0,0,0,.1)",borderRadius:6,padding:"6px 8px",fontSize:14,fontWeight:700,color:lv.color,background:"rgba(255,255,255,.8)",outline:"none",fontFamily:"'Inter',sans-serif",width:"100%"}}/>
+                                              style={{border:"1.5px solid rgba(0,0,0,.1)",borderRadius:6,padding:"6px 8px",fontSize:14,fontWeight:700,color:lv.color,background:"rgba(255,255,255,.8)",outline:"none",fontFamily:"'Plus Jakarta Sans',sans-serif",width:"100%"}}/>
                                             <div style={{display:"flex",alignItems:"center",gap:4}}>
                                               <input value={lv.pts} onChange={e=>updLv(li,"pts",e.target.value)}
                                                 style={{width:68,border:"1.5px solid rgba(0,0,0,.1)",borderRadius:6,padding:"5px 7px",fontSize:13,color:"#5A6A7E",background:"rgba(255,255,255,.8)",outline:"none",fontFamily:"'IBM Plex Mono',monospace"}}/>
@@ -2010,7 +1998,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                                             </div>
                                             <textarea value={lv.desc} onChange={e=>updLv(li,"desc",e.target.value)}
                                               placeholder={"Describe " + lv.name.toLowerCase() + " performance..."}
-                                              style={{width:"100%",border:"1.5px solid rgba(0,0,0,.1)",borderRadius:6,padding:"7px 8px",fontSize:13,fontFamily:"'Inter',sans-serif",resize:"none",height:60,outline:"none",background:"rgba(255,255,255,.8)",lineHeight:1.4,color:"#1A1A2E"}}/>
+                                              style={{width:"100%",border:"1.5px solid rgba(0,0,0,.1)",borderRadius:6,padding:"7px 8px",fontSize:13,fontFamily:"'Plus Jakarta Sans',sans-serif",resize:"none",height:60,outline:"none",background:"rgba(255,255,255,.8)",lineHeight:1.4,color:"#1A1A2E"}}/>
                                           </div>
                                         ))}
                                       </div>
@@ -2025,7 +2013,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                                     {name:"Satisfactory",pts:"50–69",bg:"#FFF8E8",color:"#A06000",desc:""},
                                     {name:"Needs work",pts:"0–49",bg:"#FEE2E2",color:"#DC2626",desc:""},
                                   ],
-                                }]}}:x))} style={{width:"100%",padding:"9px",background:"#fff",border:"1.5px dashed #D1D5DB",borderRadius:8,fontSize:14,color:"#6B7E91",cursor:"pointer",fontFamily:"'Inter',sans-serif",marginTop:4}}>
+                                }]}}:x))} style={{width:"100%",padding:"9px",background:"#fff",border:"1.5px dashed #D1D5DB",borderRadius:8,fontSize:14,color:"#6B7E91",cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",marginTop:4}}>
                                   + Add criterion
                                 </button>
                               </div>
@@ -2042,7 +2030,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                       width:"100%",marginTop:8,padding:"12px",
                       background:"transparent",border:"1.5px dashed #D1D5DB",
                       borderRadius:10,fontSize:14,color:"#6B7E91",
-                      cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                      cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                     }}>+ Add content</button>
                   ) : (
                     <div style={{marginTop:16,padding:"20px",background:"#F9FAFB",border:"1.5px dashed #003366",borderRadius:12}}>
@@ -2077,7 +2065,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                         <label style={{
                           display:"inline-flex",alignItems:"center",gap:8,
                           padding:"8px 20px",background:"#003366",color:"#fff",
-                          borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif",
+                          borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",
                         }}>
                           Browse files
                           <input type="file" style={{display:"none"}}
@@ -2178,7 +2166,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                           if(!newMat.fileName && (newMat.mode==="External Link"||newMat.mode==="Video")&&!newMat.url.trim()&&!newMat.content.trim()){setMatError("A URL is required for this mode.");return;}
                           setMaterials([...materials,{...newMat,id:Date.now()}]);
                           setNewMat({...BLANK_MAT}); setAddingMat(false); setMatError("");
-                        }} style={{padding:"10px 22px",background:"#CC0000",color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif"}}>
+                        }} style={{padding:"10px 22px",background:"#CC0000",color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif"}}>
                           Add material
                         </button>
                         <button onClick={()=>{setAddingMat(false);setMatError("");setNewMat({...BLANK_MAT});}} className="btn-ghost" style={{fontSize:13}}>Cancel</button>
@@ -2205,7 +2193,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                         padding:"5px 12px",background:"#F3F4F6",border:"1.5px solid #E5E7EB",
                         borderRadius:6,fontSize:13,fontWeight:label==="B"?700:label==="I"?400:600,
                         fontStyle:label==="I"?"italic":"normal",
-                        cursor:"pointer",fontFamily:"'Inter',sans-serif",color:"#374151",
+                        cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",color:"#374151",
                       }}>{label}</button>
                     ))}
                     <span style={{fontSize:12,color:"#9CA3AF",alignSelf:"center",marginLeft:4}}>Plain text formatting — use markdown-style: **bold**, _italic_, ## heading</span>
@@ -2217,7 +2205,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                     style={{
                       width:"100%", minHeight:220, padding:"14px 16px",
                       border:"1.5px solid #E5E7EB", borderRadius:10,
-                      fontSize:15, fontFamily:"'Inter',sans-serif",
+                      fontSize:15, fontFamily:"'Plus Jakarta Sans',sans-serif",
                       color:"#0D1B2A", resize:"vertical", outline:"none",
                       lineHeight:1.7, background:"#fff",
                       transition:"border-color .15s",
@@ -2245,7 +2233,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
                     {["Published","Draft","Locked"].map(s=>(
                       <button key={s} style={{
                         padding:"8px 18px",borderRadius:8,fontSize:13,fontWeight:600,cursor:"pointer",
-                        fontFamily:"'Inter',sans-serif",
+                        fontFamily:"'Plus Jakarta Sans',sans-serif",
                         background:s==="Published"?"#0D1B2A":"#F3F4F6",
                         color:s==="Published"?"#fff":"#6B7E91",
                         border:s==="Published"?"none":"1.5px solid #E5E7EB",
@@ -2332,13 +2320,13 @@ function StudentProgress({ users, onPreview }) {
               display:"flex",alignItems:"center",gap:8,
               padding:"10px 18px",background:"#003366",color:"#fff",
               border:"none",borderRadius:8,fontSize:13,fontWeight:700,
-              cursor:"pointer",fontFamily:"'Inter',sans-serif",whiteSpace:"nowrap",
+              cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",whiteSpace:"nowrap",
             }}>📥 Download CSV</button>
             <button onClick={exportExcel} style={{
               display:"flex",alignItems:"center",gap:8,
               padding:"10px 18px",background:"#1A7A3C",color:"#fff",
               border:"none",borderRadius:8,fontSize:13,fontWeight:700,
-              cursor:"pointer",fontFamily:"'Inter',sans-serif",whiteSpace:"nowrap",
+              cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",whiteSpace:"nowrap",
             }}>📊 Download Excel</button>
           </div>
         </div>
@@ -2479,7 +2467,7 @@ function Submissions({ submissions, gradeSubmission, onPreview }) {
             display:"flex",alignItems:"center",gap:8,marginTop:4,
             padding:"10px 18px",background:"#1A7A3C",color:"#fff",
             border:"none",borderRadius:8,fontSize:13,fontWeight:700,
-            cursor:"pointer",fontFamily:"'Inter',sans-serif",whiteSpace:"nowrap",
+            cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif",whiteSpace:"nowrap",
           }}>📊 Export to Excel</button>
         </div>
       </div>
@@ -2506,7 +2494,7 @@ function Submissions({ submissions, gradeSubmission, onPreview }) {
               padding:"10px 22px", background:filter===val?"#003366":"transparent",
               color:filter===val?"#fff":"#6B7E91", border:"none",
               fontSize:14, fontWeight:600, cursor:"pointer",
-              fontFamily:"'Inter',sans-serif", transition:"all .12s",
+              fontFamily:"'Plus Jakarta Sans',sans-serif", transition:"all .12s",
             }}>
               {label}
               {val==="pending" && pendingCount>0 && <span style={{marginLeft:7,background:"#F5A623",color:"#0D1B2A",borderRadius:20,padding:"1px 7px",fontSize:11,fontWeight:700}}>{pendingCount}</span>}
@@ -2601,7 +2589,7 @@ function Submissions({ submissions, gradeSubmission, onPreview }) {
                           value={localFeedback}
                           onChange={e=>setFeedback({...feedback,[s.id]:e.target.value})}
                           placeholder="Write feedback..."
-                          style={{width:"100%",minHeight:80,padding:"10px 13px",border:"1.5px solid #E5E7EB",borderRadius:8,fontSize:14,fontFamily:"'Inter',sans-serif",color:"#0D1B2A",resize:"vertical",outline:"none",lineHeight:1.6}}
+                          style={{width:"100%",minHeight:80,padding:"10px 13px",border:"1.5px solid #E5E7EB",borderRadius:8,fontSize:14,fontFamily:"'Plus Jakarta Sans',sans-serif",color:"#0D1B2A",resize:"vertical",outline:"none",lineHeight:1.6}}
                           onFocus={e=>e.target.style.borderColor="#003366"}
                           onBlur={e=>e.target.style.borderColor="#E5E7EB"}
                         />
@@ -2611,7 +2599,7 @@ function Submissions({ submissions, gradeSubmission, onPreview }) {
                       <button onClick={()=>{
                         const g = localGrade!==undefined&&localGrade!==""?Number(localGrade):null;
                         gradeSubmission(s.id, g, localFeedback);
-                      }} style={{padding:"10px 24px",background:"#003366",color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif"}}>
+                      }} style={{padding:"10px 24px",background:"#003366",color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif"}}>
                         Submit grade
                       </button>
                     </div>
@@ -2758,7 +2746,7 @@ function UserManagement({ users, saveUsers, addUserToDb, removeUserFromDb }) {
             display:"flex",alignItems:"center",gap:7,
             padding:"9px 18px",background:"#fff",border:"1.5px solid #E5E7EB",
             borderRadius:8,fontSize:14,fontWeight:600,color:"#0D1B2A",cursor:"pointer",
-            fontFamily:"'Inter',sans-serif",
+            fontFamily:"'Plus Jakarta Sans',sans-serif",
           }}>
             📥 Upload CSV
             <input type="file" accept=".csv" style={{display:"none"}} onChange={handleCSV}/>
@@ -2912,7 +2900,7 @@ function Analytics({ users }) {
             <label style={{fontSize:12,fontWeight:700,letterSpacing:".08em",textTransform:"uppercase",color:"#6B7E91"}}>Cohort</label>
             <select value={selectedCohort} onChange={e=>setSelectedCohort(e.target.value)} style={{
               padding:"10px 14px",borderRadius:8,border:"1.5px solid #E5E7EB",
-              fontSize:15,fontFamily:"'Inter',sans-serif",color:"#003366",
+              fontSize:15,fontFamily:"'Plus Jakarta Sans',sans-serif",color:"#003366",
               fontWeight:600,cursor:"pointer",background:"#fff",
             }}>
               {COHORTS.map(c=><option key={c} value={c}>{c}</option>)}
@@ -3186,7 +3174,7 @@ export default function App() {
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#003366",flexDirection:"column",gap:16,padding:32}}>
       <div style={{fontSize:32,fontWeight:900,color:"#fff"}}>AI Literacy 101</div>
       <div style={{fontSize:16,color:"#FCA5A5",maxWidth:480,textAlign:"center"}}>Database connection error: {loadError}</div>
-      <button onClick={()=>window.location.reload()} style={{padding:"10px 24px",background:"#CC0000",color:"#fff",border:"none",borderRadius:8,fontSize:15,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif"}}>Retry</button>
+      <button onClick={()=>window.location.reload()} style={{padding:"10px 24px",background:"#CC0000",color:"#fff",border:"none",borderRadius:8,fontSize:15,fontWeight:700,cursor:"pointer",fontFamily:"'Plus Jakarta Sans',sans-serif"}}>Retry</button>
     </div>
   );
 
@@ -3237,20 +3225,20 @@ export default function App() {
         {/* Preview banner */}
         {previewMode && (
           <div style={{
-            background:"#0056D2", color:"#fff",
-            padding:"9px 32px", display:"flex",
+            background:"#003366", color:"#fff",
+            padding:"12px 36px", display:"flex",
             alignItems:"center", justifyContent:"space-between",
-            fontSize:13, fontWeight:500, zIndex:10,
+            fontSize:14, fontWeight:500, zIndex:10,
           }}>
             <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <span style={{fontSize:16}}>👁</span>
-              <span>You are previewing the course as a student. This is exactly what your students see.</span>
+              <span style={{fontSize:18}}>👁</span>
+              <span>Student preview — this is exactly what your students see.</span>
             </div>
             <button onClick={exitPreview} style={{
-              padding:"7px 16px", background:"rgba(255,255,255,.2)",
-              color:"#fff", border:"1px solid rgba(255,255,255,.4)",
-              borderRadius:7, fontSize:12, fontWeight:700,
-              cursor:"pointer", fontFamily:"'Inter',sans-serif",
+              padding:"8px 18px", background:"rgba(255,255,255,.15)",
+              color:"#fff", border:"1px solid rgba(255,255,255,.3)",
+              borderRadius:8, fontSize:13, fontWeight:700,
+              cursor:"pointer", fontFamily:"'Plus Jakarta Sans',sans-serif",
             }}>Exit preview</button>
           </div>
         )}
