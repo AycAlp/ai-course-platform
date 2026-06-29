@@ -28,7 +28,7 @@ const T = {
 // ── FULL COURSE DATA ─────────────────────────────────────────────────────────
 const INITIAL_MODULES = [
   {
-    id:1, week:1, phase:"Phase 1 · Demystification",
+    id:1, week:1, phase:"Module 1–3 · Demystification",
     title:"The AI Moment",
     subtitle:"Why this moment is different from previous technology shifts",
     duration:"1h 45m",
@@ -50,7 +50,7 @@ const INITIAL_MODULES = [
     status:"done",
   },
   {
-    id:2, week:2, phase:"Phase 1 · Demystification",
+    id:2, week:2, phase:"Module 1–3 · Demystification",
     title:"A Brief History of AI",
     subtitle:"From the 1956 Dartmouth workshop to large language models",
     duration:"1h 50m",
@@ -71,7 +71,7 @@ const INITIAL_MODULES = [
     status:"done",
   },
   {
-    id:3, week:3, phase:"Phase 1 · Demystification",
+    id:3, week:3, phase:"Module 1–3 · Demystification",
     title:"What AI Is Not",
     subtitle:"Separating fact from science fiction — the most important week",
     duration:"2h 00m",
@@ -92,7 +92,7 @@ const INITIAL_MODULES = [
     status:"done",
   },
   {
-    id:4, week:4, phase:"Phase 2 · How AI Works",
+    id:4, week:4, phase:"Module 4–7 · How AI Works",
     title:"How Machines Learn",
     subtitle:"Supervised, unsupervised, reinforcement — without the mathematics",
     duration:"2h 10m",
@@ -113,7 +113,7 @@ const INITIAL_MODULES = [
     status:"current",
   },
   {
-    id:5, week:5, phase:"Phase 2 · How AI Works",
+    id:5, week:5, phase:"Module 4–7 · How AI Works",
     title:"Language Models and Generative AI",
     subtitle:"Tokens, prediction, hallucination — why LLMs fail confidently",
     duration:"2h 15m",
@@ -134,7 +134,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:6, week:6, phase:"Phase 2 · How AI Works",
+    id:6, week:6, phase:"Module 4–7 · How AI Works",
     title:"Images, Audio, and Multimodal AI",
     subtitle:"How image generation works. What deepfakes actually are technically.",
     duration:"1h 55m",
@@ -155,7 +155,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:7, week:7, phase:"Phase 2 · How AI Works",
+    id:7, week:7, phase:"Module 4–7 · How AI Works",
     title:"Midterm Exam",
     subtitle:"Written assessment covering Weeks 1–6. Conceptual and applied analysis.",
     duration:"2h 00m",
@@ -174,7 +174,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:8, week:8, phase:"Phase 3 · AI in the World",
+    id:8, week:8, phase:"Module 8–11 · AI in the World",
     title:"AI and Labor",
     subtitle:"What work is being automated, what is not, and why predictions keep failing",
     duration:"2h 05m",
@@ -195,7 +195,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:9, week:9, phase:"Phase 3 · AI in the World",
+    id:9, week:9, phase:"Module 8–11 · AI in the World",
     title:"Bias, Fairness, and Who AI Serves",
     subtitle:"Training data reflects the past. Amazon hiring, COMPAS, facial recognition.",
     duration:"2h 10m",
@@ -216,7 +216,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:10, week:10, phase:"Phase 3 · AI in the World",
+    id:10, week:10, phase:"Module 8–11 · AI in the World",
     title:"Misinformation, Deepfakes, and Epistemic Risk",
     subtitle:"How AI is changing what we can trust — and practical verification tools",
     duration:"2h 00m",
@@ -237,7 +237,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:11, week:11, phase:"Phase 3 · AI in the World",
+    id:11, week:11, phase:"Module 8–11 · AI in the World",
     title:"AI, Power, and Policy",
     subtitle:"Who owns the models. EU AI Act. US vs China vs EU governance approaches.",
     duration:"2h 10m",
@@ -258,7 +258,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:12, week:12, phase:"Phase 4 · Students as Agents",
+    id:12, week:12, phase:"Module 12–14 · Students as Agents",
     title:"AI in Your Field",
     subtitle:"Faculty groups research how AI is changing their own discipline",
     duration:"2h 00m",
@@ -278,7 +278,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:13, week:13, phase:"Phase 4 · Students as Agents",
+    id:13, week:13, phase:"Module 12–14 · Students as Agents",
     title:"Using AI Responsibly as a University Student",
     subtitle:"Academic integrity, prompting as skill, citation, personal AI policy",
     duration:"2h 05m",
@@ -299,7 +299,7 @@ const INITIAL_MODULES = [
     status:"locked",
   },
   {
-    id:14, week:14, phase:"Phase 4 · Students as Agents",
+    id:14, week:14, phase:"Module 12–14 · Students as Agents",
     title:"Final Presentations and Course Synthesis",
     subtitle:"Present your final project. Return to Week 1. What has changed?",
     duration:"2h 00m",
@@ -330,10 +330,10 @@ const SECTION_ICONS = {
 };
 
 const PHASE_COLORS = {
-  "Phase 1 · Demystification":  { bg:"#E8EDF3", text:"#003366", dot:"#003366" },
-  "Phase 2 · How AI Works":     { bg:"#FFE8E8", text:"#CC0000", dot:"#CC0000" },
-  "Phase 3 · AI in the World":  { bg:"#E8EDF3", text:"#003366", dot:"#003366" },
-  "Phase 4 · Students as Agents":{ bg:"#FFE8E8", text:"#CC0000", dot:"#CC0000" },
+  "Module 1–3 · Demystification":  { bg:"#E8EDF3", text:"#003366", dot:"#003366" },
+  "Module 4–7 · How AI Works":     { bg:"#FFE8E8", text:"#CC0000", dot:"#CC0000" },
+  "Module 8–11 · AI in the World":  { bg:"#E8EDF3", text:"#003366", dot:"#003366" },
+   "Module 12–14 · Students as Agents":{ bg:"#FFE8E8", text:"#CC0000", dot:"#CC0000" },
 };
 
 // Only the admin exists at startup. All other users are created through the admin panel.
@@ -777,7 +777,7 @@ function Sidebar({ user, view, setView, onLogout }) {
 
 // ── COURSERA-STYLE MODULE CARD ────────────────────────────────────────────────
 function ModuleCard({ mod, onClick }) {
-  const ph = PHASE_COLORS[mod.phase] || PHASE_COLORS["Phase 1 · Demystification"];
+  const ph = PHASE_COLORS[mod.phase] || PHASE_COLORS["Module 1 · Demystification"];
   const isLocked = mod.status === "locked";
   const isDone   = mod.status === "done";
   const isActive = mod.status === "current";
@@ -881,7 +881,7 @@ function ModuleList({ modules, setView, setMod }) {
             <div key={ph} style={{marginBottom:32}}>
               <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
                 <span className="phase-pill" style={{"--phase-bg":ph_c.bg,"--phase-text":ph_c.text,"--phase-dot":ph_c.dot,fontSize:13,padding:"4px 14px"}}>
-                  <span className="phase-dot"/>{ph.replace("Phase 1 · ","").replace("Phase 2 · ","").replace("Phase 3 · ","").replace("Phase 4 · ","")}
+                  <span className="phase-dot"/>{ph.replace("Module 1 · ","").replace("Module 2 · ","").replace("Module 3 · ","").replace("Module 4 · ","")}
                 </span>
                 <span style={{fontSize:12,color:"#6B7E91"}}>{mods.length} modules</span>
               </div>
@@ -905,7 +905,7 @@ function ModuleDetail({ mod, setView, user, addSubmission }) {
   const [text, setText] = useState(mod.status==="done" ? "I used to think AI was just a smarter autocomplete. After this module, I understand the difference between pattern recognition and genuine comprehension." : "");
   const [saved, setSaved] = useState(mod.status==="done");
   const wordCount = text.split(/\s+/).filter(Boolean).length;
-  const ph = PHASE_COLORS[mod.phase] || PHASE_COLORS["Phase 1 · Demystification"];
+  const ph = PHASE_COLORS[mod.phase] || PHASE_COLORS["Module 1 · Demystification"];
 
   return (
     <div className="detail-wrap main">
@@ -1487,7 +1487,7 @@ function ModuleEditor({ modules, updateModule, deleteModule, reorderModules, onP
     if(newUrl.trim()){ setUrls([...urls,{url:newUrl.trim(),label:newUrlLabel.trim()||newUrl.trim()}]); setNew(""); setNewLabel(""); }
   };
   const removeUrl = i => setUrls(urls.filter((_,idx)=>idx!==i));
-  const ph = PHASE_COLORS[sel.phase] || PHASE_COLORS["Phase 1 · Demystification"];
+  const ph = PHASE_COLORS[sel.phase] || PHASE_COLORS["Module 1 · Demystification"];
 
   const tabs = ["content","outcomes","materials","settings"];
 
@@ -2955,9 +2955,10 @@ export default function App() {
   const [mod,         setMod]         = useState(null);
   const [previewMode, setPreviewMode] = useState(false);
   const [loading,     setLoading]     = useState(true);
+  const [loadError,   setLoadError]   = useState("");
 
   // ── SHARED STATE — all backed by Supabase ─────────────────────────────────
-  const [users,       setUsers]       = useState(INITIAL_USERS);
+  const [users,       setUsers]       = useState([]);
   const [modules,     setModules]     = useState(INITIAL_MODULES);
   const [submissions, setSubmissions] = useState([]);
   const realtimeRef = useRef(null);
@@ -2966,23 +2967,38 @@ export default function App() {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
+      setLoadError("");
       try {
-        // Load users
-        const { data: dbUsers } = await sb.from("users").select("*").order("id");
-        if (dbUsers && dbUsers.length > 0) setUsers(dbUsers);
+        // ── Users ──────────────────────────────────────────────────────────
+        const { data: dbUsers, error: uErr } = await sb.from("users").select("*").order("id");
+        if (uErr) throw new Error("Users: " + uErr.message);
+        if (dbUsers && dbUsers.length > 0) {
+          setUsers(dbUsers.map(u => ({...u, _fromDb:true})));
+        } else {
+          // Seed admin if table is empty
+          const { data: adminRow } = await sb.from("users").insert({
+            name:"Admin", email:"admin@bilkent.edu.tr",
+            password:"admin123", role:"admin", cohort:"all", progress:0,
+          }).select().single();
+          if (adminRow) setUsers([{...adminRow, _fromDb:true}]);
+        }
 
-        // Load modules — if none in DB yet, seed from INITIAL_MODULES
-        const { data: dbMods } = await sb.from("modules").select("*").order("week");
+        // ── Modules ────────────────────────────────────────────────────────
+        const { data: dbMods, error: mErr } = await sb.from("modules").select("*").order("week");
+        if (mErr) throw new Error("Modules: " + mErr.message);
         if (dbMods && dbMods.length > 0) {
           setModules(dbMods.map(m => ({
             ...m,
+            moduleBody:        m.module_body        || "",
+            reflectionPrompt:  m.reflection_prompt  || "",
+            overviewText:      m.overview_text       || "",
             outcomes:  Array.isArray(m.outcomes)  ? m.outcomes  : [],
             skills:    Array.isArray(m.skills)     ? m.skills    : [],
             sections:  Array.isArray(m.sections)   ? m.sections  : [],
             materials: Array.isArray(m.materials)  ? m.materials : [],
           })));
         } else {
-          // First run — seed the database with INITIAL_MODULES
+          // First run — seed from INITIAL_MODULES
           const toInsert = INITIAL_MODULES.map(m => ({
             week: m.week, phase: m.phase, title: m.title,
             subtitle: m.subtitle, duration: m.duration,
@@ -2993,31 +3009,35 @@ export default function App() {
             reflection_prompt: m.reflectionPrompt||"",
             overview_text: m.overviewText||"",
           }));
-          const { data: seeded } = await sb.from("modules").insert(toInsert).select();
-          if (seeded) setModules(seeded);
+          const { data: seeded, error: sErr } = await sb.from("modules").insert(toInsert).select();
+          if (sErr) throw new Error("Seed modules: " + sErr.message);
+          if (seeded) setModules(seeded.map(m => ({...m,
+            moduleBody:m.module_body||"",
+            reflectionPrompt:m.reflection_prompt||"",
+            overviewText:m.overview_text||"",
+            outcomes:[],skills:[],sections:[],materials:[],
+          })));
         }
 
-        // Load submissions
-        const { data: dbSubs } = await sb.from("submissions").select("*").order("submitted_at", {ascending:false});
+        // ── Submissions ────────────────────────────────────────────────────
+        const { data: dbSubs, error: subErr } = await sb.from("submissions").select("*").order("submitted_at", {ascending:false});
+        if (subErr) throw new Error("Submissions: " + subErr.message);
         if (dbSubs) setSubmissions(dbSubs.map(s => ({
           ...s,
-          studentId:       s.student_id,
-          studentName:     s.student_name,
-          studentInitials: s.student_initials,
-          moduleId:        s.module_id,
-          moduleName:      s.module_name,
-          moduleWeek:      s.module_week,
-          matIndex:        s.mat_index,
-          matTitle:        s.mat_title,
-          taskType:        s.task_type,
-          taskTitle:       s.task_title,
-          maxScore:        s.max_score,
-          wordCount:       s.word_count,
-          submittedAt:     s.submitted_at,
-          gradedAt:        s.graded_at,
-          rubric:          Array.isArray(s.rubric) ? s.rubric : [],
+          studentId:s.student_id, studentName:s.student_name,
+          studentInitials:s.student_initials, moduleId:s.module_id,
+          moduleName:s.module_name, moduleWeek:s.module_week,
+          matIndex:s.mat_index, matTitle:s.mat_title,
+          taskType:s.task_type, taskTitle:s.task_title,
+          maxScore:s.max_score, wordCount:s.word_count,
+          submittedAt:s.submitted_at, gradedAt:s.graded_at,
+          rubric:Array.isArray(s.rubric)?s.rubric:[],
         })));
-      } catch(e) { console.error("Supabase load error:", e); }
+
+      } catch(e) {
+        console.error("Supabase load error:", e);
+        setLoadError(e.message || "Could not connect to database.");
+      }
       setLoading(false);
     };
     load();
@@ -3149,10 +3169,17 @@ export default function App() {
   // Loading screen
   if (loading) return (
     <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#003366",flexDirection:"column",gap:16}}>
-      <div style={{fontSize:48,fontWeight:900,color:"#fff"}}>AI Literacy 101</div>
-      <div style={{fontSize:16,color:"rgba(255,255,255,.6)"}}>Loading course data...</div>
-      <div style={{width:48,height:48,border:"4px solid rgba(255,255,255,.2)",borderTopColor:"#CC0000",borderRadius:"50%",animation:"spin 0.8s linear infinite"}}/>
+      <div style={{fontSize:40,fontWeight:900,color:"#fff"}}>AI Literacy 101</div>
+      <div style={{fontSize:16,color:"rgba(255,255,255,.6)"}}>Connecting to database...</div>
+      <div style={{width:44,height:44,border:"4px solid rgba(255,255,255,.15)",borderTopColor:"#CC0000",borderRadius:"50%",animation:"spin 0.8s linear infinite"}}/>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
+  if (loadError) return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#003366",flexDirection:"column",gap:16,padding:32}}>
+      <div style={{fontSize:32,fontWeight:900,color:"#fff"}}>AI Literacy 101</div>
+      <div style={{fontSize:16,color:"#FCA5A5",maxWidth:480,textAlign:"center"}}>Database connection error: {loadError}</div>
+      <button onClick={()=>window.location.reload()} style={{padding:"10px 24px",background:"#CC0000",color:"#fff",border:"none",borderRadius:8,fontSize:15,fontWeight:700,cursor:"pointer",fontFamily:"'Inter',sans-serif"}}>Retry</button>
     </div>
   );
 
